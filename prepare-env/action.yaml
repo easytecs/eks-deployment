@@ -23,13 +23,13 @@ runs:
   steps:
   - uses: actions/checkout@v2
   - uses: actions/checkout@v2
-  - run: mkdir -p env/
+  - run: mkdir -p ./env/
     shell: bash
-  - run: cat "${{ env.SECRETS_FILE }}" >> ./env/secrets-tmp.yaml
+  - run: cat "${{ env.SECRETS_FILE }}" > ./env/secrets-tmp.yaml
     shell: bash
-  - run: cat "${{ inputs.secrets-file }}" >> ./env/secrets.yaml
+  - run: cat "${{ inputs.secrets-file }}" > ./env/secrets.yaml
     shell: bash
-  - run: cat "${{ inputs.config-map-file }}" >> ./env/secrets.yaml
+  - run: cat "${{ inputs.config-map-file }}" > ./env/secrets.yaml
     shell: bash
 
   - uses: actions/upload-artifact@v3
