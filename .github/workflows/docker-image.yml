@@ -1,0 +1,23 @@
+name: Scan Docker Repo
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scan:
+    name: List Recent Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Scan Docker Repository
+        uses: dhet/scan-docker-tags-action@v1.0.1
+        with:
+          image: ghcr.io/easytecs/application-front
+          max-age-minutes: 15
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+        id: scan
+      - name: Print
+        run: "echo 'Recent updates: ${{ steps.scan.outputs.tags }}'"
