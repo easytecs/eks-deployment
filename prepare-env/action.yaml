@@ -11,8 +11,11 @@ runs:
   steps:
   - uses: actions/checkout@v2
   - run: mkdir -p env/
+    shell: bash
   - run: cat ${{ inputs.secrets-file }} >> ./env/secrets.yaml
+    shell: bash
   - run: cat ${{ inputs.config-map-file }} >> ./env/secrets.yaml
+    shell: bash
 
   - uses: actions/upload-artifact@v3
     with:
