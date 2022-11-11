@@ -46,6 +46,9 @@ metadata:
   namespace: test
   annotations:
     kubernetes.io/ingress.class: nginx
+    alb.ingress.kubernets.io/target-type: ip
+    alb.ingress.kubernets.io/schema: internet-facing
+    alb.ingress.kubernets.io/security-group: sg-0792960602de09f5c,sg-001c5b81c9023e47a,sg-0cf81eafa1428cb4c,sg-04d090c64a87e950e,sg-0ff683dedc1a9c596
 spec:
   rules:
   - http:
