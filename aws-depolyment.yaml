@@ -1,0 +1,23 @@
+name: aws-depolyment
+env:
+  DOCKER_IMAGE: docker_image
+  DOCKER_TAG: latest
+  K8S_NAMESPACE: dev_namespace
+  K8S_DEPLOYMENT: dev_deployment
+  AWS_REGION: us-east-1
+  EKS_CLUSTER_NAME: eks-dev
+  
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - name: Deploy
+      uses: safe2008/eks-actions@v0.0.4
+      env:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: $AWS_REGION
+        cluster_name: $EKS_CLUSTER_NAME
+      with:
+        args: |
+          kubectl apply -f application.yaml
