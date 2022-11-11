@@ -28,4 +28,4 @@ jobs:
           cluster_name: $EKS_CLUSTER_NAME
         with:
           args: |
-            kubectl remove -f application.yaml
+            kubectl delete -f application.yaml
