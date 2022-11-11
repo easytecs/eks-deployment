@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: easytecs/eks-deployment@main
-      - uses: ./prepare-env.yaml
+      - uses: ./prepare-env
         with:
           secrets-file: "hello"
           config-map-file: "world"
