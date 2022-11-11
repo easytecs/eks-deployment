@@ -1,0 +1,20 @@
+name: prepare-env
+   
+inputs:
+  secrets-file: 
+    required: true
+  config-map-file:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+  - run: mkdir -p env/
+  - run: cat ${{ inputs.secrets-file }} >> ./env/secrets.yaml
+  - run: cat ${{ config-map-file }} >> ./env/secrets.yaml
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: env
+      path: env/
