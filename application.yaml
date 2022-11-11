@@ -55,5 +55,5 @@ spec:
             name: echoserver
             port:
               number: 8080
-        path: echo
+        path: /echo
         pathType: Prefix
