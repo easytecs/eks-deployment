@@ -12,6 +12,9 @@ on:
       APPLICATION_PORT: 
         required: true
         type: string
+      REPOSITORY:
+        required: true
+        type: string
       
       NBL_NAME: 
         default: "nbl-dev" 
@@ -135,6 +138,7 @@ jobs:
           ACTOR: ${{ github.actor }}
           CR_PAT: ${{ secrets.CR_PAT }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
 
   aws-depolyment:
     runs-on: ubuntu-latest
