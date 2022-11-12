@@ -2,12 +2,6 @@ import sys
  
 applicationFile = """
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: st-service
-  
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,7 +44,7 @@ spec:
           timeoutSeconds: 2
         envFrom:
          - configMapRef:
-           name: env-{0}
+            name: env-{0}
 ---
 apiVersion: v1
 kind: Service
