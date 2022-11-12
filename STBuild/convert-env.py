@@ -18,6 +18,7 @@ for key, value in enumerate(sys.argv):
       continue
 
     keyAndValue = value.split("=")
+    print(keyAndValue)
     if keyAndValue[0].startswith("ST_") and keyAndValue[1] != "1":
         file_object.write("\n  {0}: {1}".format(keyAndValue[0].replace("ST_", ""), keyAndValue[1]))
 
