@@ -2,7 +2,8 @@ import os
 import sys
  
 # total arguments
-apcliationNameSplited = keyAndValue = sys.argv[0].split("=")
+apcliationNameSplited =  sys.argv[0].split("=")
+print(apcliationNameSplited)
 
 secretFile = """
 apiVersion: v1
