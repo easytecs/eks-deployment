@@ -154,4 +154,5 @@ jobs:
         with:
           REPOSITORY: ${{ inputs.APPLICATION_NAME }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+          CR_PAT: ${{ secrets.CR_PAT }}
     needs: [pre-env, pre-application]
