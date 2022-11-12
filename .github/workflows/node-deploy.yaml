@@ -137,6 +137,7 @@ jobs:
         with:
           AWS_REGION: ${{ inputs.AWS_REGION }}
           EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+    needs: [pre-env, pre-application, build-node-image]
 
   after-build:
     runs-on: ubuntu-latest
