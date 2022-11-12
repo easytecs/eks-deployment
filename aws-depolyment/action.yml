@@ -36,8 +36,5 @@ runs:
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
         args: |
-          cat ./deployment-application/application.yaml
-          cat ./deployment-env/config-map.yaml
-          
-# kubectl apply -f ./deployment-application/application.yaml
-# kubectl apply -f ./deployment-env/config-map.yaml
+          kubectl apply -f ./deployment-env/config-map.yaml
+          kubectl apply -f ./deployment-application/application.yaml
