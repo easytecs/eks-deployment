@@ -28,29 +28,29 @@ spec:
         name: {0}
         ports:
         - containerPort: {2}
-      livenessProbe:
-        failureThreshold: 3
-        httpGet:
-          path: /health
-          port: {3}
-          scheme: HTTP
-        initialDelaySeconds: 15
-        periodSeconds: 7
-        successThreshold: 1
-        timeoutSeconds: 2
-      readinessProbe:
-        failureThreshold: 3
-        httpGet:
-          path: /health
-          port: {3}
-          scheme: HTTP
-        initialDelaySeconds: 15
-        periodSeconds: 7
-        successThreshold: 1
-        timeoutSeconds: 2
-      envFrom:
-       - configMapRef:
-         name: env-{0}
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: {3}
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 7
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: {3}
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 7
+          successThreshold: 1
+          timeoutSeconds: 2
+        envFrom:
+         - configMapRef:
+           name: env-{0}
 ---
 apiVersion: v1
 kind: Service
