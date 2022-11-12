@@ -45,6 +45,8 @@ spec:
         envFrom:
          - configMapRef:
             name: env-{0}
+      imagePullSecrets:
+       - name: regcred
 ---
 apiVersion: v1
 kind: Service
