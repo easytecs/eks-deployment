@@ -9,6 +9,8 @@ inputs:
     required: true
   NBL_NAME:
     required: true
+  CR_PAT:
+    required: true
 
 runs:
   using: "composite"
@@ -16,7 +18,7 @@ runs:
   - uses: actions/checkout@v2
     with:
       repository: easytecs/eks-deployment
-      token: ${{ secrets.CR_PAT }}
+      token: ${{ inputs.CR_PAT }}
   - run: ls -la
   - run: mkdir -p ./deployment
     shell: bash
