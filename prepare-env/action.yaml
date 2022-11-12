@@ -1,43 +1,45 @@
 name: prepare-env
 
-# inputs:
-#   MONGO_USERNAME:
-#       required: false
-#   MONGO_PASSWORD:
-#       required: false
-#   MONGO_HOST:
-#       required: false
-#   MONGO_DB_DATABASE:
-#       required: false
-#   APPLICATION_PORT:
-#       required: false
-#   API_GATEWAY_URL:
-#       required: false
-#   ELASTICSEARCH_NODE:
-#       required: false
-#   ELASTICSEARCH_USER:
-#       required: false
-#   ELASTICSEARCH_PWD:
-#       required: false
-#   HASH_SALT:
-#       required: false
-#   EMAIL_HOST_SMTP:
-#       required: false 
-#   EMAIL_USERNAME:
-#       required: false
-#   EMAIL_PASSWORD:
-#       required: false
-#   ZOOM_HOST:
-#       required: false
-#   CALENDAR_HOST:
-#       required: false
+inputs:
+  APPLICATION_NAME:
+    required: true
+  ST_MONGO_USERNAME:
+    required: false
+  ST_MONGO_PASSWORD:
+    required: false
+  ST_MONGO_HOST:
+    required: false
+  ST_MONGO_DB_DATABASE:
+    required: false
+  ST_APPLICATION_PORT:
+    required: false
+  ST_API_GATEWAY_URL:
+    required: false
+  ST_ELASTICSEARCH_NODE:
+    required: false
+  ST_ELASTICSEARCH_USER:
+    required: false
+  ST_ELASTICSEARCH_PWD:
+    required: false
+  ST_HASH_SALT:
+    required: false
+  ST_EMAIL_HOST_SMTP:
+    required: false 
+  ST_EMAIL_USERNAME:
+    required: false
+  ST_EMAIL_PASSWORD:
+    required: false
+  ST_ZOOM_HOST:
+    required: false
+  ST_CALENDAR_HOST:
+    required: false
 
 runs:
   using: "composite"
   steps:
   - uses: actions/checkout@v2
   - uses: actions/checkout@v2
-  - run: python ./env/convert-env.py ${{ secrets }}
+  - run: python ./env/convert-env.py
     shell: bash
   - run: ls -la
     shell: bash
