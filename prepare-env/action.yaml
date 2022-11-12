@@ -1,10 +1,36 @@
 name: prepare-env
 
 inputs:
-  secrets: 
-    required: false
-  config-map:
-    required: false
+  MONGO_USERNAME:
+      required: false
+  MONGO_PASSWORD:
+      required: false
+  MONGO_HOST:
+      required: false
+  MONGO_DB_DATABASE:
+      required: false
+  APPLICATION_PORT:
+      required: false
+  API_GATEWAY_URL:
+      required: false
+  ELASTICSEARCH_NODE:
+      required: false
+  ELASTICSEARCH_USER:
+      required: false
+  ELASTICSEARCH_PWD:
+      required: false
+  HASH_SALT:
+      required: false
+  EMAIL_HOST_SMTP:
+      required: false 
+  EMAIL_USERNAME:
+      required: false
+  EMAIL_PASSWORD:
+      required: false
+  ZOOM_HOST:
+      required: false
+  CALENDAR_HOST:
+      required: false
 
 runs:
   using: "composite"
