@@ -17,7 +17,7 @@ data:""".format(apcliationNameSplited[1])
 file_object = open('./env/secrets.yaml', 'a')
 file_object.write(secretFile)
 
-for key, value in sys.argv:
+for key, value in enumerate(sys.argv):
     if key <= 1:
       continue
 
