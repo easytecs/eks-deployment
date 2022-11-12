@@ -13,7 +13,8 @@ runs:
   - uses: actions/checkout@v2
   - run: mkdir -p ./release-version
     shell: bash
-  - run: cat ${{ inputs.IMAGE_TAG }} ./release-version/release.txt
+
+  - run: python ./STBuild/save-release-version.py ${{ inputs.IMAGE_TAG }}
     shell: bash
 
   - uses: actions/upload-artifact@v3
