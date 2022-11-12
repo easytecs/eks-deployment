@@ -14,7 +14,9 @@ runs:
   using: "composite"
   steps:
   - uses: actions/checkout@v2
-  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ secrets.CR_PAT }}
   - run: mkdir -p ./deployment
     shell: bash
   - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
