@@ -28,6 +28,29 @@ spec:
         name: {0}
         ports:
         - containerPort: {2}
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: {3}
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 7
+        successThreshold: 1
+        timeoutSeconds: 2
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: {3}
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 7
+        successThreshold: 1
+        timeoutSeconds: 2
+      envFrom:
+       - configMapRef:
+         name: env-{0}
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +61,6 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb
     service.beta.kubernetes.io/aws-load-balancer-internal: "true"
     service.beta.kubernetes.io/aws-load-balancer-name: {3}
-    # service.beta.kubernetes.io/security-groups: sg-0792960602de09f5c,sg-001c5b81c9023e47a,sg-0cf81eafa1428cb4c,sg-04d090c64a87e950e,sg-0ff683dedc1a9c596
 spec:
   ports:
   - port: {2}
