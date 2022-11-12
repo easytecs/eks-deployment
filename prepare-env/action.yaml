@@ -11,7 +11,7 @@ runs:
   steps:
   - uses: actions/checkout@v2
   - uses: actions/checkout@v2
-  - run: sh ./env/convert-sc-script.sh
+  - run: python ./env/convert-env.py
     shell: bash
   - run: cat ./env/secrets.yaml
     shell: bash
