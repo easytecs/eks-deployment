@@ -1,0 +1,48 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./prepare-env
+        with:
+          APPLICATION_NAME: "world"
+          ST_MONGO_USERNAME: "TEST"
+
+  pre-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./prepare-application
+        with:
+          APPLICATION_NAME: "world"
+          DEPLOYMENT_IMAGE: "TEST"
+          APPLICATION_PORT: "TEST"
+          NBL_NAME: "TEST"
+
+  # build-node-image:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./build-node-image
+  #       with:
+  #         ACTOR: "test"
+  #         CR_PAT: "test"
+  #         IMAGE_TAG: "test"
+
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./aws-depolyment
+        with:
+          AWS_REGION: "test"
+          EKS_CLUSTER_NAME: "test"
+          AWS_ACCESS_KEY_ID: "test"
+          AWS_SECRET_ACCESS_KEY: "test"

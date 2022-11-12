@@ -1,23 +1,43 @@
 name: aws-depolyment
-env:
-  DOCKER_IMAGE: docker_image
-  DOCKER_TAG: latest
-  K8S_NAMESPACE: dev_namespace
-  K8S_DEPLOYMENT: dev_deployment
-  AWS_REGION: us-east-1
-  EKS_CLUSTER_NAME: eks-dev
+
+inputs:
+  AWS_REGION:
+    required: true
+  EKS_CLUSTER_NAME:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
   
 runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
+
+    - name: Download ConfigMap Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-env
+        path: ./deployment-env
+
+    - name: Download Deployment Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-application
+        path: ./deployment-application
+
     - name: Deploy
       uses: safe2008/eks-actions@v0.0.4
       env:
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws_region: $AWS_REGION
-        cluster_name: $EKS_CLUSTER_NAME
+        aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ inputs.AWS_REGION }}
+        cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
         args: |
-          kubectl apply -f application.yaml
+          cat ./deployment-application/application.yaml
+          cat ./deployment-env/config-map.yaml
+          
+# kubectl apply -f ./deployment-application/application.yaml
+# kubectl apply -f ./deployment-env/config-map.yaml

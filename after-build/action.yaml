@@ -1,0 +1,21 @@
+name: Node.js CI
+
+inputs:
+  REPOSITORY:
+    required: true
+  CR_PAT:
+    required: true
+  IMAGE_TAG:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: hmanzur/actions-set-secret@v2.0.0
+    with:
+      name: 'LAST_IMAGE_DOCKER'
+      value: ${{ inputs.IMAGE_TAG }}
+      repository: ${{ inputs.REPOSITORY }}
+      token: ${{ inputs.CR_PAT }}
+      org: true
+      visibility: 'all'
