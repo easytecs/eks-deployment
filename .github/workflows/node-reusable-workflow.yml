@@ -100,21 +100,21 @@ jobs:
       - uses: ./prepare-env
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
-          ST_MONGO_USERNAME: ${{ inputs.ST_MONGO_USERNAME }}
-          ST_MONGO_PASSWORD: ${{ inputs.ST_MONGO_PASSWORD }}
-          ST_MONGO_HOST: ${{ inputs.ST_MONGO_HOST }}
-          ST_MONGO_DB_DATABASE: ${{ inputs.ST_MONGO_DB_DATABASE }}
-          ST_APPLICATION_PORT: ${{ inputs.ST_APPLICATION_PORT }}
-          ST_API_GATEWAY_URL: ${{ inputs.ST_API_GATEWAY_URL }}
-          ST_ELASTICSEARCH_NODE: ${{ inputs.ST_ELASTICSEARCH_NODE }}
-          ST_ELASTICSEARCH_USER: ${{ inputs.ST_ELASTICSEARCH_USER }}
-          ST_ELASTICSEARCH_PWD: ${{ inputs.ST_ELASTICSEARCH_PWD }}
-          ST_HASH_SALT: ${{ inputs.ST_HASH_SALT }}
-          ST_EMAIL_HOST_SMTP: ${{ inputs.ST_EMAIL_HOST_SMTP }}
-          ST_EMAIL_USERNAME: ${{ inputs.ST_EMAIL_USERNAME }}
-          ST_EMAIL_PASSWORD: ${{ inputs.ST_EMAIL_PASSWORD }}
-          ST_ZOOM_HOST: ${{ inputs.ST_ZOOM_HOST }}
-          ST_CALENDAR_HOST: ${{ inputs.ST_CALENDAR_HOST }}
+          ST_MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          ST_MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          ST_MONGO_HOST: ${{ secrets.MONGO_HOST }}
+          ST_MONGO_DB_DATABASE: ${{ secrets.MONGO_DB_DATABASE }}
+          ST_APPLICATION_PORT: ${{ secrets.APPLICATION_PORT }}
+          ST_API_GATEWAY_URL: ${{ secrets.API_GATEWAY_URL }}
+          ST_ELASTICSEARCH_NODE: ${{ secrets.ELASTICSEARCH_NODE }}
+          ST_ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
+          ST_ELASTICSEARCH_PWD: ${{ secrets.ELASTICSEARCH_PWD }}
+          ST_HASH_SALT: ${{ secrets.HASH_SALT }}
+          ST_EMAIL_HOST_SMTP: ${{ secrets.EMAIL_HOST_SMTP }}
+          ST_EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          ST_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          ST_ZOOM_HOST: ${{ secrets.ZOOM_HOST }}
+          ST_CALENDAR_HOST: ${{ secrets.CALENDAR_HOST }}
 
   pre-application:
     runs-on: ubuntu-latest
