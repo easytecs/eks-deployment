@@ -17,6 +17,7 @@ runs:
     with:
       repository: easytecs/eks-deployment
       token: ${{ secrets.CR_PAT }}
+  - run: ls -la
   - run: mkdir -p ./deployment
     shell: bash
   - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
