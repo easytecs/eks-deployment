@@ -36,5 +36,6 @@ runs:
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
         args: |
+          kubectl get namespace | grep -q "^st-service " || kubectl create namespace st-service
           kubectl apply -f ./deployment-env/config-map.yaml
           kubectl apply -f ./deployment-application/application.yaml
