@@ -1,0 +1,129 @@
+name: node-deploy
+
+on:
+  workflow_call:
+    APPLICATION_NAME:
+      required: true
+    DEPLOYMENT_IMAGE:
+      required: true
+    APPLICATION_PORT: 
+      required: true
+    REPOSITORY: 
+      required: true
+    
+    NBL_NAME: 
+      required: true
+    AWS_REGION: 
+      required: true
+    EKS_CLUSTER_NAME: 
+      required: true
+
+    ST_MONGO_USERNAME:
+      required: false
+      default: "1"
+    ST_MONGO_PASSWORD:
+      required: false
+      default: "1"
+    ST_MONGO_HOST:
+      required: false
+      default: "1"
+    ST_MONGO_DB_DATABASE:
+      required: false
+      default: "1"
+    ST_APPLICATION_PORT:
+      required: false
+      default: "1"
+    ST_API_GATEWAY_URL:
+      required: false
+      default: "1"
+    ST_ELASTICSEARCH_NODE:
+      required: false
+      default: "1"
+    ST_ELASTICSEARCH_USER:
+      required: false
+      default: "1"
+    ST_ELASTICSEARCH_PWD:
+      required: false
+      default: "1"
+    ST_HASH_SALT:
+      required: false
+      default: "1"
+    ST_EMAIL_HOST_SMTP:
+      required: false 
+      default: "1"
+    ST_EMAIL_USERNAME:
+      required: false
+      default: "1"
+    ST_EMAIL_PASSWORD:
+      required: false
+      default: "1"
+    ST_ZOOM_HOST:
+      required: false
+      default: "1"
+    ST_CALENDAR_HOST:
+      required: false
+      default: "1"
+
+jobs:
+  pre-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./prepare-env
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          ST_MONGO_USERNAME: ${{ inputs.ST_MONGO_USERNAME }}
+          ST_MONGO_PASSWORD: ${{ inputs.ST_MONGO_PASSWORD }}
+          ST_MONGO_HOST: ${{ inputs.ST_MONGO_HOST }}
+          ST_MONGO_DB_DATABASE: ${{ inputs.ST_MONGO_DB_DATABASE }}
+          ST_APPLICATION_PORT: ${{ inputs.ST_APPLICATION_PORT }}
+          ST_API_GATEWAY_URL: ${{ inputs.ST_API_GATEWAY_URL }}
+          ST_ELASTICSEARCH_NODE: ${{ inputs.ST_ELASTICSEARCH_NODE }}
+          ST_ELASTICSEARCH_USER: ${{ inputs.ST_ELASTICSEARCH_USER }}
+          ST_ELASTICSEARCH_PWD: ${{ inputs.ST_ELASTICSEARCH_PWD }}
+          ST_HASH_SALT: ${{ inputs.ST_HASH_SALT }}
+          ST_EMAIL_HOST_SMTP: ${{ inputs.ST_EMAIL_HOST_SMTP }}
+          ST_EMAIL_USERNAME: ${{ inputs.ST_EMAIL_USERNAME }}
+          ST_EMAIL_PASSWORD: ${{ inputs.ST_EMAIL_PASSWORD }}
+          ST_ZOOM_HOST: ${{ inputs.ST_ZOOM_HOST }}
+          ST_CALENDAR_HOST: ${{ inputs.ST_CALENDAR_HOST }}
+
+  pre-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./prepare-application
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
+          APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
+          NBL_NAME: ${{ inputs.NBL_NAME }}
+
+  build-node-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./build-node-image
+        with:
+          ACTOR: ${{ github.actor }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+          IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./aws-depolyment
+        with:
+          AWS_REGION: ${{ inputs.AWS_REGION }}
+          EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+
+  after-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./after-build
+        with:
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+          IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+    needs: [pre-env, pre-application]
