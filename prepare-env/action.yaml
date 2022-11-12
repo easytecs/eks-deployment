@@ -3,7 +3,6 @@ name: prepare-env
 inputs:
   APPLICATION_NAME:
     required: true
-    default: "1"
   ST_MONGO_USERNAME:
     required: false
     default: "1"
