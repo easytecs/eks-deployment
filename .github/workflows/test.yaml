@@ -53,5 +53,4 @@ jobs:
         with:
           REPOSITORY: "test"
           IMAGE_TAG: "test"
-
-  
+    needs: [pre-env, pre-application]
