@@ -11,7 +11,7 @@ runs:
   steps:
   - uses: actions/checkout@v2
   - uses: actions/checkout@v2
-  - run: for i in $(${{ inputs.secrets }}); do echo "  $i: ${!i}" >> ./env/secrets.yaml ; done
+  - run: sh ./env/convert-sc-script.sh
     shell: bash
   - run: cat ./env/secrets.yaml
     shell: bash
