@@ -8,7 +8,8 @@ kind: ConfigMap
 metadata:
   name: env-{0}
   namespace: st-service
-data:""".format(apcliationNameSplited[1])
+data:
+""".format(apcliationNameSplited[1])
 
 file_object = open('./deployment/config-map.yaml', 'a')
 file_object.write(secretFile)
