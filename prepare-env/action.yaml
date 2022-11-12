@@ -1,21 +1,9 @@
 name: prepare-env
-env:
-   SECRETS_FILE: '
-apiVersion: v1
-kind: Secret
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: { ... }
-  name: secrets
-  resourceVersion: "164619"
-  uid: cfee02d6-c137-11e5-8d73-42010af00002
-type: Opaque
-data:'
 
 inputs:
-  secrets-file: 
+  secrets: 
     required: true
-  config-map-file:
+  config-map:
     required: true
 
 runs:
@@ -23,15 +11,9 @@ runs:
   steps:
   - uses: actions/checkout@v2
   - uses: actions/checkout@v2
-  - run: mkdir -p ./env/
+  - run: for i in $(${{ inputs.secrets }}); do echo "  $i: ${!i}" >> ./env/secrets.yaml ; done
     shell: bash
-  - run: ls -la
-    shell: bash
-  - run: echo ${{ env.SECRETS_FILE }} 
-    shell: bash
-  - run: echo "${{ env.SECRETS_FILE }}" > ./env/secrets-tmp.yaml
-    shell: bash
-  - run: echo "${{ inputs.secrets-file }}" > ./env/secrets.yaml
+  - run: cat ./env/secrets.yaml
     shell: bash
   - run: echo "${{ inputs.config-map-file }}" > ./env/secrets.yaml
     shell: bash
