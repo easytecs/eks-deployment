@@ -96,7 +96,6 @@ jobs:
   pre-env:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: easytecs/eks-deployment/prepare-env/action.yaml@main
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
@@ -119,7 +118,6 @@ jobs:
   pre-application:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: easytecs/eks-deployment/prepare-application/action.yaml@main
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
@@ -130,7 +128,6 @@ jobs:
   build-node-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: easytecs/eks-deployment/build-node-image/action.yaml@main
         with:
           ACTOR: ${{ github.actor }}
@@ -140,7 +137,6 @@ jobs:
   aws-depolyment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: easytecs/eks-deployment/aws-depolyment/action.yaml@main
         with:
           AWS_REGION: ${{ inputs.AWS_REGION }}
@@ -152,7 +148,6 @@ jobs:
   after-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: easytecs/eks-deployment/after-build/action.yaml@main
         with:
           REPOSITORY: ${{ inputs.APPLICATION_NAME }}
