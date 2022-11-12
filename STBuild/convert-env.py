@@ -7,6 +7,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: env-{0}
+  namespace: st-service
 data:""".format(apcliationNameSplited[1])
 
 file_object = open('./deployment/config-map.yaml', 'a')
