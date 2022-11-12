@@ -39,6 +39,10 @@ runs:
   - uses: actions/checkout@v2
   - run: python ./env/convert-env.py
     shell: bash
+  - run: ls -la
+    shell: bash
+  - run: ls -la ./env
+    shell: bash
   - run: cat ./env/secrets.yaml
     shell: bash
   # - run: echo "${{ inputs.config-map-file }}" > ./env/secrets.yaml
