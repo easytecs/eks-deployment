@@ -18,4 +18,3 @@ runs:
       repository: ${{ inputs.REPOSITORY }}
       token: ${{ inputs.CR_PAT }}
       org: true
-      visibility: 'all'
