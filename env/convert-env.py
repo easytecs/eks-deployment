@@ -9,7 +9,7 @@ metadata:
 type: Opaque
 data:""".format(os.getenv('APPLICATION_NAME'))
 
-file_object = open('./secrets.yaml', 'a')
+file_object = open('./env/secrets.yaml', 'a')
 file_object.write(secretFile)
 
 for name, value in os.environ.items():
