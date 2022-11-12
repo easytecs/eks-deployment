@@ -96,7 +96,7 @@ jobs:
   pre-env:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/prepare-env/action.yaml@main
+      - uses: easytecs/eks-deployment/prepare-env@main
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           ST_MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
@@ -118,7 +118,7 @@ jobs:
   pre-application:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/prepare-application/action.yaml@main
+      - uses: easytecs/eks-deployment/prepare-application@main
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
@@ -137,7 +137,7 @@ jobs:
   aws-depolyment:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/aws-depolyment/action.yaml@main
+      - uses: easytecs/eks-deployment/aws-depolyment@main
         with:
           AWS_REGION: ${{ inputs.AWS_REGION }}
           EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
@@ -148,7 +148,7 @@ jobs:
   after-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/after-build/action.yaml@main
+      - uses: easytecs/eks-deployment/after-build@main
         with:
           REPOSITORY: ${{ inputs.APPLICATION_NAME }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
