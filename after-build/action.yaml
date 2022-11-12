@@ -5,12 +5,17 @@ inputs:
     required: true
   IMAGE_TAG:
     required: true
+  CR_PAT:
+    required: true
+
 
 runs:
   using: "composite"
   steps:
   - uses: actions/checkout@v2
-  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
   - run: mkdir -p ./release-version
     shell: bash
 
