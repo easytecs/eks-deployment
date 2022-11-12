@@ -17,10 +17,15 @@ runs:
       node-version: 16.x
       cache: 'npm'
   - run: npm ci
+    shell: bash
   - run: npm run test
+    shell: bash
   - run: npm run build --if-present
+    shell: bash
   - run: rm -rf node_modules
+    shell: bash
   - run: npm i --only=prod
+    shell: bash
   
   - name: Login to GitHub Container Registry
     uses: docker/login-action@v2
@@ -29,7 +34,9 @@ runs:
       username: ${{ inputs.ACTOR }}
       password: ${{ inputs.CR_PAT }}
   - run: docker build . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
+    shell: bash
   - run: docker push ${{ inputs.IMAGE_TAG }}
+    shell: bash
 
 outputs:
   image-tag:
