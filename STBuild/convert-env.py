@@ -7,14 +7,12 @@ print(apcliationNameSplited)
 
 secretFile = """
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: secrets-{0}
-  uid: cfee02d6-c137-11e5-8d73-42010af00002
-type: Opaque
+  name: env-{0}
 data:""".format(apcliationNameSplited[1])
 
-file_object = open('./env/secrets.yaml', 'a')
+file_object = open('./deployment/config-map.yaml', 'a')
 file_object.write(secretFile)
 
 for key, value in enumerate(sys.argv):
