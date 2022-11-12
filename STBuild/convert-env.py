@@ -1,9 +1,6 @@
-import os
 import sys
  
-# total arguments
 apcliationNameSplited =  sys.argv[1].split("=")
-print(apcliationNameSplited)
 
 secretFile = """
 apiVersion: v1

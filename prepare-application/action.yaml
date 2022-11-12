@@ -1,0 +1,28 @@
+name: prepare-application
+
+inputs:
+  APPLICATION_NAME:
+    required: true
+  DEPLOYMENT_IMAGE:
+    required: true
+  APPLICATION_PORT:
+    required: true
+  NBL_NAME:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+  - uses: actions/checkout@v2
+  - run: mkdir -p ./deployment
+    shell: bash
+  - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
+    shell: bash
+  - run: cat ./deployment/application.yaml
+    shell: bash
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: deployment-application
+      path: ./deployment

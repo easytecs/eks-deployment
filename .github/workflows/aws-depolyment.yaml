@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  pre-env:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,3 +14,15 @@ jobs:
         with:
           APPLICATION_NAME: "world"
           ST_MONGO_USERNAME: "TEST"
+
+  pre-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./prepare-application
+        with:
+          APPLICATION_NAME: "world"
+          ST_MONGO_USERNAME: "TEST"
+          DEPLOYMENT_IMAGE: "TEST"
+          APPLICATION_PORT: "TEST"
+          NBL_NAME: "TEST"
