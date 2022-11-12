@@ -20,6 +20,6 @@ for key, value in enumerate(sys.argv):
     keyAndValue = value.split("=")
     if keyAndValue[0].startswith("ST_") and keyAndValue[1] != "":
         print(keyAndValue[1])
-        file_object.write('\n\t{0}: "{1}"'.format(keyAndValue[0].replace("ST_", ""), keyAndValue[1]))
+        file_object.write('\n\t{0}: {1}'.format(keyAndValue[0].replace("ST_", ""), keyAndValue[1]))
 
 file_object.close()
