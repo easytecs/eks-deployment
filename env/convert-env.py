@@ -2,7 +2,7 @@ import os
 import sys
  
 # total arguments
-apcliationNameSplited =  sys.argv[0].split("=")
+apcliationNameSplited =  sys.argv[1].split("=")
 print(apcliationNameSplited)
 
 secretFile = """
@@ -17,7 +17,10 @@ data:""".format(apcliationNameSplited[1])
 file_object = open('./env/secrets.yaml', 'a')
 file_object.write(secretFile)
 
-for name, value in sys.argv:
+for key, value in sys.argv:
+    if key <= 1:
+      continue
+
     keyAndValue = value.split("=")
     if keyAndValue[0].startswith("ST_") and keyAndValue[1] != "1":
         file_object.write("  {0}: {1}".format(keyAndValue[0].replace("ST_", ""), keyAndValue[1]))
