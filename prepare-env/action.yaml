@@ -3,6 +3,8 @@ name: prepare-env
 inputs:
   APPLICATION_NAME:
     required: true
+  CR_PAT:
+    required: true
   ST_MONGO_USERNAME:
     required: false
     default: "1"
@@ -53,7 +55,9 @@ runs:
   using: "composite"
   steps:
   - uses: actions/checkout@v2
-  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
   - run: mkdir -p ./deployment
     shell: bash
   - run: python ./STBuild/convert-env.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} ST_MONGO_USERNAME=${{ inputs.ST_MONGO_USERNAME }} ST_MONGO_PASSWORD=${{ inputs.ST_MONGO_PASSWORD }} ST_MONGO_HOST=${{ inputs.ST_MONGO_HOST }} ST_MONGO_DB_DATABASE=${{ inputs.ST_MONGO_DB_DATABASE }} ST_APPLICATION_PORT=${{ inputs.ST_APPLICATION_PORT }} ST_API_GATEWAY_URL=${{ inputs.ST_API_GATEWAY_URL }} ST_ELASTICSEARCH_NODE=${{ inputs.ST_ELASTICSEARCH_NODE }} ST_ELASTICSEARCH_USER=${{ inputs.ST_ELASTICSEARCH_USER }} ST_ELASTICSEARCH_PWD=${{ inputs.ST_ELASTICSEARCH_PWD }} ST_HASH_SALT=${{ inputs.ST_HASH_SALT }} ST_EMAIL_HOST_SMTP=${{ inputs.ST_EMAIL_HOST_SMTP }} ST_EMAIL_USERNAME=${{ inputs.ST_EMAIL_USERNAME }} ST_EMAIL_PASSWORD=${{ inputs.ST_EMAIL_PASSWORD }} ST_ZOOM_HOST=${{ inputs.ST_ZOOM_HOST }} ST_CALENDAR_HOST=${{ inputs.ST_CALENDAR_HOST }}     
