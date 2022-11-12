@@ -13,6 +13,7 @@ file_object = open('./env/secrets.yaml', 'a')
 file_object.write(secretFile)
 
 for name, value in os.environ.items():
+    print(name)
     if name.startswith("ST_"):
         file_object.write("  {0}: {1}".format(name.replace("ST_", ""), value))
 
