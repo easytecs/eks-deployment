@@ -125,6 +125,7 @@ jobs:
           DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
           APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
           NBL_NAME: ${{ inputs.NBL_NAME }}
+          CR_PAT: ${{ secrets.CR_PAT }}
 
   build-node-image:
     runs-on: ubuntu-latest
