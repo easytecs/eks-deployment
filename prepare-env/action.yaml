@@ -1,10 +1,10 @@
 name: prepare-env
 
-inputs:
-  secrets: 
-    required: true
-  config-map:
-    required: true
+# inputs:
+#   secrets: 
+#     required: true
+#   config-map:
+#     required: true
 
 runs:
   using: "composite"
@@ -15,8 +15,8 @@ runs:
     shell: bash
   - run: cat ./env/secrets.yaml
     shell: bash
-  - run: echo "${{ inputs.config-map-file }}" > ./env/secrets.yaml
-    shell: bash
+  # - run: echo "${{ inputs.config-map-file }}" > ./env/secrets.yaml
+    # shell: bash
 
   - uses: actions/upload-artifact@v3
     with:
