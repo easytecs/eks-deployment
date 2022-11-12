@@ -25,11 +25,15 @@ runs:
   - uses: actions/checkout@v2
   - run: mkdir -p ./env/
     shell: bash
-  - run: cat "${{ env.SECRETS_FILE }}" > ./env/secrets-tmp.yaml
+  - run: ls -la
     shell: bash
-  - run: cat "${{ inputs.secrets-file }}" > ./env/secrets.yaml
+  - run: echo ${{ env.SECRETS_FILE }} 
     shell: bash
-  - run: cat "${{ inputs.config-map-file }}" > ./env/secrets.yaml
+  - run: echo "${{ env.SECRETS_FILE }}" > ./env/secrets-tmp.yaml
+    shell: bash
+  - run: echo "${{ inputs.secrets-file }}" > ./env/secrets.yaml
+    shell: bash
+  - run: echo "${{ inputs.config-map-file }}" > ./env/secrets.yaml
     shell: bash
 
   - uses: actions/upload-artifact@v3
