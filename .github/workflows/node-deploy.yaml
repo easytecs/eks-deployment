@@ -2,6 +2,10 @@ name: node-deploy
 
 on:
   workflow_call:
+    inputs:
+      config-path:
+        required: false
+        type: string
 #     inputs:
 #       APPLICATION_NAME:
 #         required: true
@@ -85,12 +89,20 @@ on:
 #         type: string
 
 jobs:
-  test:
+  reusable_workflow_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: "Test"
-        run: echo "here"
+    - uses: actions/labeler@v4
+      with:
+        configuration-path: ${{ inputs.config-path }}
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: "Test"
+#         run: echo "here"
       
 #   pre-env:
 #     runs-on: ubuntu-latest
