@@ -7,10 +7,18 @@ inputs:
     required: true
   IMAGE_TAG:
     required: true
+  RESPOSITORY:
+    required: true
 
 runs:
   using: "composite"
   steps:
+  - name: Clone Project
+    uses: actions/checkout@v2
+    with:
+      repository:  ${{ inputs.RESPOSITORY }}
+      token: ${{ inputs.CR_PAT }}
+    
   - name: Use Node.js 16.x
     uses: actions/setup-node@v3
     with:
