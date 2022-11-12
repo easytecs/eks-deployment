@@ -2,65 +2,87 @@ name: node-deploy
 
 on:
   workflow_call:
-    APPLICATION_NAME:
-      required: true
-    DEPLOYMENT_IMAGE:
-      required: true
-    APPLICATION_PORT: 
-      required: true
-    
-    NBL_NAME: 
-      default: "nbl-dev" 
-    AWS_REGION:
-      default: "us-east-1" 
-    EKS_CLUSTER_NAME:
-      default: "eks-dev" 
+    inputs:
+      APPLICATION_NAME:
+        required: true
+        type: string
+      DEPLOYMENT_IMAGE:
+        required: true
+        type: string
+      APPLICATION_PORT: 
+        required: true
+        type: string
+      
+      NBL_NAME: 
+        default: "nbl-dev" 
+        type: string
+      AWS_REGION:
+        default: "us-east-1" 
+        type: string
+      EKS_CLUSTER_NAME:
+        default: "eks-dev" 
+        type: string
 
-    ST_MONGO_USERNAME:
-      required: false
-      default: "1"
-    ST_MONGO_PASSWORD:
-      required: false
-      default: "1"
-    ST_MONGO_HOST:
-      required: false
-      default: "1"
-    ST_MONGO_DB_DATABASE:
-      required: false
-      default: "1"
-    ST_APPLICATION_PORT:
-      required: false
-      default: "1"
-    ST_API_GATEWAY_URL:
-      required: false
-      default: "1"
-    ST_ELASTICSEARCH_NODE:
-      required: false
-      default: "1"
-    ST_ELASTICSEARCH_USER:
-      required: false
-      default: "1"
-    ST_ELASTICSEARCH_PWD:
-      required: false
-      default: "1"
-    ST_HASH_SALT:
-      required: false
-      default: "1"
-    ST_EMAIL_HOST_SMTP:
-      required: false 
-      default: "1"
-    ST_EMAIL_USERNAME:
-      required: false
-      default: "1"
-    ST_EMAIL_PASSWORD:
-      required: false
-      default: "1"
-    ST_ZOOM_HOST:
-      required: false
-      default: "1"
-    ST_CALENDAR_HOST:
-      required: false
-      default: "1"
+      ST_MONGO_USERNAME:
+        required: false
+        default: "1"
+        type: string
+      ST_MONGO_PASSWORD:
+        required: false
+        default: "1"
+        type: string
+      ST_MONGO_HOST:
+        required: false
+        default: "1"
+        type: string
+      ST_MONGO_DB_DATABASE:
+        required: false
+        default: "1"
+        type: string
+      ST_APPLICATION_PORT:
+        required: false
+        default: "1"
+        type: string
+      ST_API_GATEWAY_URL:
+        required: false
+        default: "1"
+        type: string
+      ST_ELASTICSEARCH_NODE:
+        required: false
+        default: "1"
+        type: string
+      ST_ELASTICSEARCH_USER:
+        required: false
+        default: "1"
+        type: string
+      ST_ELASTICSEARCH_PWD:
+        required: false
+        default: "1"
+        type: string
+      ST_HASH_SALT:
+        required: false
+        default: "1"
+        type: string
+      ST_EMAIL_HOST_SMTP:
+        required: false 
+        default: "1"
+        type: string
+      ST_EMAIL_USERNAME:
+        required: false
+        default: "1"
+        type: string
+      ST_EMAIL_PASSWORD:
+        required: false
+        default: "1"
+        type: string
+      ST_ZOOM_HOST:
+        required: false
+        default: "1"
+        type: string
+      ST_CALENDAR_HOST:
+        required: false
+        default: "1"
+        type: string
 
 jobs:
   pre-env:
