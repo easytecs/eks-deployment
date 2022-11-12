@@ -36,13 +36,23 @@ jobs:
   #         CR_PAT: "test"
   #         IMAGE_TAG: "test"
 
-  aws-depolyment:
+  # aws-depolyment:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./aws-depolyment
+  #       with:
+  #         AWS_REGION: "test"
+  #         EKS_CLUSTER_NAME: "test"
+
+  after-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./aws-depolyment
+      - uses: ./after-build
         with:
-          AWS_REGION: "test"
-          EKS_CLUSTER_NAME: "test"
-          AWS_ACCESS_KEY_ID: "test"
-          AWS_SECRET_ACCESS_KEY: "test"
+          REPOSITORY: 'easytecs/eks-deployment'
+          CR_PAT: ${{ secrets.CR_PAT }}
+          IMAGE_TAG: "test"
+
+  

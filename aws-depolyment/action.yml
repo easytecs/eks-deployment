@@ -5,10 +5,6 @@ inputs:
     required: true
   EKS_CLUSTER_NAME:
     required: true
-  AWS_ACCESS_KEY_ID:
-    required: true
-  AWS_SECRET_ACCESS_KEY:
-    required: true
   
 runs:
   using: "composite"
@@ -30,8 +26,8 @@ runs:
     - name: Deploy
       uses: safe2008/eks-actions@v0.0.4
       env:
-        aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_region: ${{ inputs.AWS_REGION }}
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
