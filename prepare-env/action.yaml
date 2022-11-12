@@ -1,10 +1,10 @@
 name: prepare-env
 
-# inputs:
-#   secrets: 
-#     required: true
-#   config-map:
-#     required: true
+inputs:
+  secrets: 
+    required: false
+  config-map:
+    required: false
 
 runs:
   using: "composite"
