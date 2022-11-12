@@ -1,4 +1,4 @@
-name: node-deploy
+name: Run NodeJs Deploy
 
 on:
   workflow_call:
