@@ -5,14 +5,14 @@ applicationFile = """
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: st_service
+  name: st-service
   
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {0}
-  namespace: st_service
+  namespace: st-service
 spec:
   selector:
     matchLabels:
@@ -56,7 +56,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {0}
-  namespace: st_service
+  namespace: st-service
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb
     service.beta.kubernetes.io/aws-load-balancer-internal: "true"
