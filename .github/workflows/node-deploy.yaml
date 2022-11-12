@@ -8,8 +8,6 @@ on:
       required: true
     APPLICATION_PORT: 
       required: true
-    REPOSITORY: 
-      required: true
     
     NBL_NAME: 
       default: "nbl-dev" 
@@ -124,6 +122,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./after-build
         with:
-          REPOSITORY: ${{ inputs.REPOSITORY }}
+          REPOSITORY: ${{ inputs.APPLICATION_NAME }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
     needs: [pre-env, pre-application]
