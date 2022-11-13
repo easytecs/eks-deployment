@@ -26,7 +26,7 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /health
-            port: {3}
+            port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
           periodSeconds: 7
@@ -36,7 +36,7 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /health
-            port: {3}
+            port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
           periodSeconds: 7
@@ -65,10 +65,10 @@ spec:
   selector:
     app: {0}
 """.format(
-  sys.argv[1], # application_name
-  sys.argv[2], # deployment_image
-  sys.argv[3], # application_port
-  sys.argv[4]  # nbl_namne
+  sys.argv[1], # 0 application_name
+  sys.argv[2], # 1 deployment_image
+  sys.argv[3], # 2 application_port
+  sys.argv[4]  # 3 nbl_namne
 )
 
 file_object = open('./deployment/application.yaml', 'a')
