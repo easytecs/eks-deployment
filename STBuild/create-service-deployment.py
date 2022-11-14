@@ -1,12 +1,18 @@
 import sys
- 
+
+args = ""
+if sys.argv[6]:
+  args = """
+        args: ["{0}"]
+  """.format('","'.join(sys.argv[6].split(",")))
+
 applicationFile = """
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {0}
-  namespace: st-application
+  namespace: st-service
 spec:
   selector:
     matchLabels:
@@ -20,12 +26,13 @@ spec:
       containers:
       - image: {1}
         name: {0}
+{5}
         ports:
         - containerPort: {2}
         livenessProbe:
           failureThreshold: 3
           httpGet:
-            path: /health
+            path: {4}
             port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
@@ -52,23 +59,21 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {0}
-  namespace: st-application
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-name: {3}
+  namespace: st-service
 spec:
   ports:
   - port: {2}
     protocol: TCP
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: {0}
 """.format(
   sys.argv[1], # 0 application_name
   sys.argv[2], # 1 deployment_image
   sys.argv[3], # 2 application_port
-  sys.argv[4]  # 3 nbl_namne
+  sys.argv[4], # 3 nbl_namne
+  sys.argv[5], # 4 path_health
+  args  # 5 args
 )
 
 file_object = open('./deployment/application.yaml', 'a')

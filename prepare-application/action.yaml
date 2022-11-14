@@ -1,6 +1,9 @@
 name: prepare-application
 
 inputs:
+  TYPE:
+    required: true
+    defautl: application
   APPLICATION_NAME:
     required: true
   DEPLOYMENT_IMAGE:
@@ -8,20 +11,21 @@ inputs:
   APPLICATION_PORT:
     required: true
   NBL_NAME:
-    required: true
-  CR_PAT:
-    required: true
+    required: false
+  APPLICATION_ARG:
+    required: false
+  APPLICATION_PATH_HEALTH:
+    required: false
+
 
 runs:
   using: "composite"
   steps:
   - uses: actions/checkout@v2
-    with:
-      repository: easytecs/eks-deployment
-      token: ${{ inputs.CR_PAT }}
+  - uses: actions/checkout@v2
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
+  - run: python ./STBuild/create-${{TYPE}}-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }} ${{ inputs.APPLICATION_PATH_HEALTH }} ${{ inputs.APPLICATION_ARG }}
     shell: bash
   - run: cat ./deployment/application.yaml
     shell: bash
