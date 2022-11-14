@@ -24,6 +24,9 @@ on:
       SERVICE_HEML_VALUES:
         required: false
         type: string
+      SERVICE_HELM_CRD:
+        required: false
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -46,3 +49,6 @@ jobs:
           SERVICE_RELEASE_NAME: ${{ inputs.SERVICE_RELEASE_NAME }}
           SERVICE_HEML_NAME: ${{ inputs.SERVICE_HEML_NAME }}
           SERVICE_HELM_REPO: ${{ inputs.SERVICE_HELM_REPO }}
+          SERVICE_HELM_CRD: ${{ inputs.SERVICE_HELM_CRD }}
+
+          
