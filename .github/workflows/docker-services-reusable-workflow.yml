@@ -66,7 +66,7 @@ jobs:
   build-node-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/build-node-image@main
+      - uses: easytecs/eks-deployment/build-service-image@main
         with:
           ACTOR: ${{ github.actor }}
           CR_PAT: ${{ secrets.CR_PAT }}
