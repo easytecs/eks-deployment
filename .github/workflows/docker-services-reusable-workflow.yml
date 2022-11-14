@@ -61,7 +61,7 @@ jobs:
           REPOSITORY: ${{ inputs.REPOSITORY }}
           APPLICATION_ARGS: ${{ inputs.APPLICATION_ARGS }}
           CR_PAT: ${{ secrets.CR_PAT }}
-          TYPE: service
+          PROCCESS_TYPE: service
           APPLICATION_PATH_HEALTH: ${{ inputs.APPLICATION_PATH_HEALTH }}
 
   build-node-image:
