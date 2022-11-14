@@ -23,8 +23,6 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      CR_PAT:
-        required: true
 
 jobs:     
 
