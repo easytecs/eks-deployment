@@ -15,7 +15,9 @@ inputs:
     required: true
   SERVICE_HEML_VALUES:
     required: false
-  
+  SERVICE_HEML_NAME:
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -26,15 +28,11 @@ runs:
         aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         aws_region: ${{ inputs.AWS_REGION }}
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
-
-    - name: Deployment Helm
-      uses: deliverybot/helm@v1
-      with:
-        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ inputs.AWS_REGION }}
-        cluster-name: ${{ inputs.EKS_CLUSTER_NAME }}
-        namespace: ${{ inputs.SERVICE_NAMESPACE }}
-        release: ${{ inputs.SERVICE_RELEASE_NAME }}
-        chart: 'app'
-        values: ${{ inputs.SERVICE_HEML_VALUES }}
+      - run: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        shell: bash
+      - run: chmod 700 get_helm.sh
+        shell: bash
+      - run: ./get_helm.sh
+        shell: bash
+      - run: helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
+        shell: bash

@@ -18,6 +18,9 @@ on:
       SERVICE_HEML_VALUES:
         required: false
         type: string
+      SERVICE_HEML_NAME:
+        required: false
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -38,3 +41,4 @@ jobs:
           SERVICE_NAMESPACE: ${{ inputs.SERVICE_NAMESPACE }}
           SERVICE_HEML_VALUES: ${{ inputs.SERVICE_HEML_VALUES }}
           SERVICE_RELEASE_NAME: ${{ inputs.SERVICE_RELEASE_NAME }}
+          SERVICE_HEML_NAME: ${{ inputs.SERVICE_HEML_NAME }}
