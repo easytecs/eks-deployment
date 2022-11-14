@@ -15,7 +15,7 @@ runs:
   steps:
   - uses: actions/checkout@v2
     with:
-      repository: easytecs/eks-deployment
+      repository: ${{ inputs.RESPOSITORY }}
       token: ${{ inputs.CR_PAT }}
   - run: docker build . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
     shell: bash
