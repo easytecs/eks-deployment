@@ -15,10 +15,13 @@ on:
       SERVICE_NAMESPACE:
         required: true
         type: string
-      SERVICE_HEML_VALUES:
-        required: false
-        type: string
       SERVICE_HEML_NAME:
+        required: true
+        type: string
+      SERVICE_HELM_REPO:
+        required: true
+        type: string
+      SERVICE_HEML_VALUES:
         required: false
         type: string
     secrets:
@@ -42,3 +45,4 @@ jobs:
           SERVICE_HEML_VALUES: ${{ inputs.SERVICE_HEML_VALUES }}
           SERVICE_RELEASE_NAME: ${{ inputs.SERVICE_RELEASE_NAME }}
           SERVICE_HEML_NAME: ${{ inputs.SERVICE_HEML_NAME }}
+          SERVICE_HELM_REPO: ${{ inputs.SERVICE_HELM_REPO }}
