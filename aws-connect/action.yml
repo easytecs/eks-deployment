@@ -20,6 +20,10 @@ inputs:
   SERVICE_HELM_REPO:
     required: true
 
+  SERVICE_HELM_CRD:
+    required: false
+    default: false
+
 runs:
   using: "composite"
   steps:
@@ -38,6 +42,8 @@ runs:
 
           kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
           
+          ${{ inputs.SERVICE_HELM_CRD }} && kubectl create -f ${{ inputs.SERVICE_HELM_CRD }} || echo "NO CREATE SERVICE_HELM_CRD" 
+
           helm repo add ${{ inputs.SERVICE_HELM_REPO }}
           helm repo update
           helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
