@@ -25,8 +25,14 @@ runs:
   - uses: actions/checkout@v2
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/create-${{ inputs.PROCCESS_TYPE }}-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }} ${{ inputs.APPLICATION_PATH_HEALTH }} ${{ inputs.APPLICATION_ARGS }}
+  - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
+    if: ${{ inputs.PROCCESS_TYPE == 'application' }}
     shell: bash
+
+  - run: python ./STBuild/create-service-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }} ${{ inputs.APPLICATION_PATH_HEALTH }} ${{ inputs.APPLICATION_ARGS }}
+    if: ${{ inputs.PROCCESS_TYPE == 'service' }}
+    shell: bash
+
   - run: cat ./deployment/application.yaml
     shell: bash
 
