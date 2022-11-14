@@ -18,14 +18,14 @@ inputs:
   
 runs:
   using: "composite"
-    steps:
-      - name: Deploy
-        uses: peymanmortazavi/eks-helm-deploy@v1
-        with:
-          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.AWS_REGION }}
-          cluster-name: ${{ inputs.EKS_CLUSTER_NAME }}
-          namespace: ${{ inputs.SERVICE_NAMESPACE }}
-          values: ${{ inputs.SERVICE_HEML_VALUES }}
-          name: ${{ inputs.SERVICE_RELEASE_NAME }}
+  steps:
+    - name: Deploy
+      uses: peymanmortazavi/eks-helm-deploy@v1
+      with:
+        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ inputs.AWS_REGION }}
+        cluster-name: ${{ inputs.EKS_CLUSTER_NAME }}
+        namespace: ${{ inputs.SERVICE_NAMESPACE }}
+        values: ${{ inputs.SERVICE_HEML_VALUES }}
+        name: ${{ inputs.SERVICE_RELEASE_NAME }}
