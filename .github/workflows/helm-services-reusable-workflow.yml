@@ -9,6 +9,15 @@ on:
       EKS_CLUSTER_NAME:
         default: "eks-dev" 
         type: string
+      SERVICE_RELEASE_NAME:
+        required: true
+        type: string
+      SERVICE_NAMESPACE:
+        required: true
+        type: string
+      SERVICE_HEML_VALUES:
+        required: false
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -28,3 +37,6 @@ jobs:
           EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SERVICE_NAMESPACE: ${{ inputs.SERVICE_NAMESPACE }}
+          SERVICE_HEML_VALUES: ${{ inputs.SERVICE_HEML_VALUES }}
+          SERVICE_RELEASE_NAME: ${{ inputs.SERVICE_RELEASE_NAME }}

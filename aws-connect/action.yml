@@ -1,0 +1,31 @@
+name: aws-depolyment
+
+inputs:
+  AWS_REGION:
+    required: true
+  EKS_CLUSTER_NAME:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+  SERVICE_RELEASE_NAME:
+    required: true
+  SERVICE_NAMESPACE:
+    required: true
+  SERVICE_HEML_VALUES:
+    required: false
+  
+runs:
+  using: "composite"
+    steps:
+      - name: Deploy
+        uses: peymanmortazavi/eks-helm-deploy@v1
+        with:
+          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.AWS_REGION }}
+          cluster-name: ${{ inputs.EKS_CLUSTER_NAME }}
+          namespace: ${{ inputs.SERVICE_NAMESPACE }}
+          values: ${{ inputs.SERVICE_HEML_VALUES }}
+          name: ${{ inputs.SERVICE_RELEASE_NAME }}
