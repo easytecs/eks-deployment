@@ -19,13 +19,22 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Deploy
-      uses: peymanmortazavi/eks-helm-deploy@v1
+    - name: Configure AWS credentials and EKS
+      uses: safe2008/eks-actions@v0.0.4
+      env:
+        aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ inputs.AWS_REGION }}
+        cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
+
+    - name: Deployment Helm
+      uses: deliverybot/helm@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ inputs.AWS_REGION }}
         cluster-name: ${{ inputs.EKS_CLUSTER_NAME }}
         namespace: ${{ inputs.SERVICE_NAMESPACE }}
+        release: ${{ inputs.SERVICE_RELEASE_NAME }}
+        chart: 'app'
         values: ${{ inputs.SERVICE_HEML_VALUES }}
-        name: ${{ inputs.SERVICE_RELEASE_NAME }}
