@@ -28,11 +28,9 @@ runs:
         aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         aws_region: ${{ inputs.AWS_REGION }}
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
-    - run: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-      shell: bash
-    - run: chmod 700 get_helm.sh
-      shell: bash
-    - run: ./get_helm.sh
-      shell: bash
-    - run: helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
-      shell: bash
+      with:
+        args: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          /get_helm.sh
+          helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
