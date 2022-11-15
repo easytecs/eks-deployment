@@ -35,7 +35,7 @@ for value in json.load(apiMapping)["endpoints"]:
 
 print(paths)
 
-ingress = """
+ingressFile = """
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -47,12 +47,12 @@ spec:
   rules:
   - http:
       paths:
-{2}
+{1}
 """.format(
   argsObject["APPLICATION_NAME"],
   paths
 )
 
 file_object = open('./deployment/ingress.yaml', 'a')
-file_object.write(ingress)
+file_object.write(ingressFile)
 file_object.close()
