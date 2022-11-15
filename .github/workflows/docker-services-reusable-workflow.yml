@@ -48,6 +48,21 @@ jobs:
       - uses: easytecs/eks-deployment/prepare-env@main
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          ST_MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          ST_MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          ST_MONGO_HOST: ${{ secrets.MONGO_HOST }}
+          ST_MONGO_DB_DATABASE: ${{ secrets.MONGO_DB_DATABASE }}
+          ST_APPLICATION_PORT: ${{ secrets.APPLICATION_PORT }}
+          ST_API_GATEWAY_URL: ${{ secrets.API_GATEWAY_URL }}
+          ST_ELASTICSEARCH_NODE: ${{ secrets.ELASTICSEARCH_NODE }}
+          ST_ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
+          ST_ELASTICSEARCH_PWD: ${{ secrets.ELASTICSEARCH_PWD }}
+          ST_HASH_SALT: ${{ secrets.HASH_SALT }}
+          ST_EMAIL_HOST_SMTP: ${{ secrets.EMAIL_HOST_SMTP }}
+          ST_EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          ST_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          ST_ZOOM_HOST: ${{ secrets.ZOOM_HOST }}
+          ST_CALENDAR_HOST: ${{ secrets.CALENDAR_HOST }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-application:
