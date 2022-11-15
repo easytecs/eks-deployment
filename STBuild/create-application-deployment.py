@@ -53,10 +53,6 @@ kind: Service
 metadata:
   name: {0}
   namespace: st-application
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-name: {3}
 spec:
   ports:
   - port: {2}
