@@ -87,7 +87,7 @@ spec:
         livenessProbe:
           failureThreshold: 3
           httpGet:
-            path: /health
+            path: {4}
             port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
@@ -97,7 +97,7 @@ spec:
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /health
+            path: {4}
             port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
@@ -109,13 +109,14 @@ spec:
             name: env-{0}
       imagePullSecrets:
        - name: regcred
-{4}
+{5}
 """.format(
-  argsObject['APPLICATION_NAME'], # 0 application_name
-  argsObject['DEPLOYMENT_IMAGE'], # 1 deployment_image
-  argsObject['APPLICATION_PORT'], # 2 application_port
-  argsObject['SERVICE_NAMESPACE'], # 3 namespace
-  service                         # 4 service
+  argsObject['APPLICATION_NAME'],        # 0 application_name
+  argsObject['DEPLOYMENT_IMAGE'],        # 1 deployment_image
+  argsObject['APPLICATION_PORT'],        # 2 application_port
+  argsObject['SERVICE_NAMESPACE'],       # 3 namespace
+  argsObject['APPLICATION_PATH_HEALTH'], # 4 health_path
+  service                                # 5 service
 )
 
 file_object = open('./deployment/application.yaml', 'a')
