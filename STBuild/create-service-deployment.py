@@ -1,10 +1,24 @@
 import sys
 
+def formatArgs ():
+  argsObject = {}
+  for key, value in enumerate(sys.argv):
+    if key < 1:
+      continue
+
+    keyAndValue = value.split("=")
+    argsObject[keyAndValue[0]] = keyAndValue[1]
+
+  return argsObject
+
+
+argsObject = formatArgs()
+
 args = ""
 if sys.argv[6]:
   args = """
         args: ["{0}"]
-  """.format('","'.join(sys.argv[6].split(",")))
+  """.format('","'.join(argsObject["APPLICATION_ARGS"].split(",")))
 
 applicationFile = """
 ---
@@ -42,7 +56,7 @@ spec:
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /health
+            path: {4}
             port: {2}
             scheme: HTTP
           initialDelaySeconds: 15
@@ -68,11 +82,11 @@ spec:
   selector:
     app: {0}
 """.format(
-  sys.argv[1], # 0 application_name
-  sys.argv[2], # 1 deployment_image
-  sys.argv[3], # 2 application_port
-  sys.argv[4], # 3 nbl_namne
-  sys.argv[5], # 4 path_health
+  argsObject["APPLICATION_NAME"], # 0 application_name
+  argsObject["DEPLOYMENT_IMAGE"], # 1 deployment_image
+  argsObject["APPLICATION_PORT"], # 2 application_port
+  argsObject["NBL_NAME"], # 3 nbl_namne
+  argsObject["APPLICATION_PATH_HEALTH"], # 4 path_health
   args  # 5 args
 )
 
