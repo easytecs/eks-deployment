@@ -56,4 +56,4 @@ runs:
 
           kubectl apply -f ./deployment-env/config-map.yaml
           kubectl apply -f ./deployment-application/application.yaml
-          ${{ inputs.DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-intress/ingress.yaml
+          ${{ inputs.DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-ingress/ingress.yaml
