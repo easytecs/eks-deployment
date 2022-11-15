@@ -17,11 +17,23 @@ runs:
     with:
       repository: ${{ inputs.REPOSITORY }}
       token: ${{ inputs.CR_PAT }}
+    
+  - uses: actions/upload-artifact@v3
+    with:
+      name: api-mapping
+      path: ./api-mapping
 
   - uses: actions/checkout@v2
     with:
       repository: easytecs/eks-deployment
       token: ${{ inputs.CR_PAT }}
+  
+  - name: Download Deployment Artifact
+    uses: actions/download-artifact@v3
+    with:
+      name: api-mapping
+      path: ./api-mapping
+
   - run: ls -la
     shell: bash
   - run: mkdir -p ./deployment
