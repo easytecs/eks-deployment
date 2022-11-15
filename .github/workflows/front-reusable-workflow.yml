@@ -73,12 +73,13 @@ jobs:
   build-node-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/build-node-image@main
+      - uses: easytecs/eks-deployment/build-front-image@main
         with:
           ACTOR: ${{ github.actor }}
           CR_PAT: ${{ secrets.CR_PAT }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
           REPOSITORY: ${{ inputs.REPOSITORY }}
+    needs: [pre-env]
 
   aws-depolyment:
     runs-on: ubuntu-latest
