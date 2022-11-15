@@ -161,7 +161,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           DEPLOYMENT_INGRESS: 1
           SERVICE_NAMESPACE: st-application
-    needs: [pre-env, pre-application, build-node-image]
+    needs: [pre-env, pre-application, pre-ingress, build-node-image]
 
   after-build:
     runs-on: ubuntu-latest
@@ -171,4 +171,4 @@ jobs:
           REPOSITORY: ${{ inputs.APPLICATION_NAME }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
           CR_PAT: ${{ secrets.CR_PAT }}
-    needs: [pre-env, pre-application]
+    needs: [pre-env, pre-application, pre-ingress]

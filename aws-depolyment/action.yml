@@ -37,13 +37,13 @@ runs:
 
     - name: Download Deployment Artifact
       uses: actions/download-artifact@v3
+      if: ${{ inputs.DEPLOYMENT_INGRESS == 1 }}
       with:
         name: deployment-ingress
         path: ./deployment-ingress
 
     - name: Deploy
       uses: safe2008/eks-actions@v0.0.4
-      if: ${{ inputs.DEPLOYMENT_INGRESS == 1 }}
       env:
         aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -51,6 +51,7 @@ runs:
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
         args: |
+          ls -la
           kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
 
           kubectl apply -f ./deployment-env/config-map.yaml
