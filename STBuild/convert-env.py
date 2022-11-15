@@ -1,22 +1,23 @@
 import sys
  
 apcliationNameSplited =  sys.argv[1].split("=")
+serviceNameSplited =  sys.argv[2].split("=")
 
 secretFile = """
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: env-{0}
-  namespace: st-service
+  namespace: {1}
 data:
   IS_ST: "YES"
-""".format(apcliationNameSplited[1])
+""".format(apcliationNameSplited[1], serviceNameSplited[1])
 
 file_object = open('./deployment/config-map.yaml', 'a')
 file_object.write(secretFile)
 
 for key, value in enumerate(sys.argv):
-    if key <= 1:
+    if key <= 2:
       continue
 
     keyAndValue = value.split("=")
