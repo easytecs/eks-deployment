@@ -9,7 +9,7 @@ metadata:
   name: env-{0}
   namespace: st-service
 data:
-  IS_ST: true
+  IS_ST: "YES"
 """.format(apcliationNameSplited[1])
 
 file_object = open('./deployment/config-map.yaml', 'a')
