@@ -1,0 +1,34 @@
+name: prepare-env
+
+inputs:
+  APPLICATION_NAME:
+    required: true
+  CR_PAT:
+    required: true
+  RESPOSITORY:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      repository: ${{ inputs.RESPOSITORY }}
+      token: ${{ inputs.CR_PAT }}
+  - run: export API_MAPPING=$(cat ./api-mapping/api.json)
+
+  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
+  - run: mkdir -p ./deployment
+    shell: bash
+  - run: python ./STBuild/convert-ingress.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} APPLICATION_PORT=${{ inputs.APPLICATION_PORT }}
+    shell: bash
+  - run: cat ./deployment/ingress.yaml
+    shell: bash
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: deployment-env
+      path: ./deployment

@@ -119,6 +119,16 @@ jobs:
           ST_CALENDAR_HOST: ${{ secrets.CALENDAR_HOST }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
+  pre-ingress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-ingress@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+
   pre-application:
     runs-on: ubuntu-latest
     steps:
