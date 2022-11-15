@@ -15,29 +15,42 @@ def formatArgs ():
 argsObject = formatArgs()
 
 apiMapping = open('./api-mapping/api.json')
-print(json.load(apiMapping))
 
+paths = ""
 
-# secretFile = """
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: env-{0}
-#   namespace: st-service
-# data:
-#   IS_ST: "YES"
-# """.format(apcliationNameSplited[1])
+for value in json.load(apiMapping)["endpoints"]:
+  paths = paths + """
+      - path: {2}
+        pathType: Prefix
+        backend:
+          service:
+            name: {0}
+            port:
+              number: {1}
+  """.format(
+    argsObject["APPLICATION_NAME"],
+    argsObject["APPLICATION_PORT"],
+    value
+  )
 
-# file_object = open('./deployment/config-map.yaml', 'a')
-# file_object.write(secretFile)
+ingress = """
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {0}
+  namespace: st-application
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+{2}
+""".format(
+  argsObject["APPLICATION_NAME"],
+  paths
+)
 
-# for key, value in enumerate(sys.argv):
-#     if key <= 1:
-#       continue
-
-#     keyAndValue = value.split("=")
-#     if keyAndValue[0].startswith("ST_") and keyAndValue[1] != "":
-#         print(keyAndValue[1])
-#         file_object.write('\n  {0}: "{1}"'.format(keyAndValue[0].replace("ST_", ""), keyAndValue[1]))
-
-# file_object.close()
+file_object = open('./deployment/ingress.yaml', 'a')
+file_object.write(ingress)
+file_object.close()
