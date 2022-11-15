@@ -38,6 +38,15 @@ jobs:
   pre-env:
     runs-on: ubuntu-latest
     steps:
+      - uses: easytecs/eks-deployment/prepare-env@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          SERVICE_NAMESPACE: st-frontend
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+  pre-front-env:
+    runs-on: ubuntu-latest
+    steps:
       - uses: easytecs/eks-deployment/prepare-env-front@main
         with:
           PUBLIC_URL: ${{ secrets.MONGO_USERNAME }}
