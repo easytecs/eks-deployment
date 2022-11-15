@@ -3,9 +3,11 @@ name: prepare-env
 inputs:
   APPLICATION_NAME:
     required: true
+  APPLICATION_PORT:
+    required: true
   CR_PAT:
     required: true
-  RESPOSITORY:
+  REPOSITORY:
     required: true
 
 runs:
@@ -13,7 +15,7 @@ runs:
   steps:
   - uses: actions/checkout@v2
     with:
-      repository: ${{ inputs.RESPOSITORY }}
+      repository: ${{ inputs.REPOSITORY }}
       token: ${{ inputs.CR_PAT }}
   - run: export API_MAPPING=$(cat ./api-mapping/api.json)
 
