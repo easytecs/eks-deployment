@@ -20,11 +20,11 @@ runs:
     with:
       repository: easytecs/eks-deployment
       token: ${{ inputs.CR_PAT }}
-      
+
   - run: mkdir -p ./deployment
     shell: bash
 
-  - run: python ./STBuild/create-service-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }} ${{ inputs.APPLICATION_PATH_HEALTH }} ${{ inputs.APPLICATION_ARGS }}
+  - run: python ./STBuild/create-service-deployment.py APPLICATION_NAME="${{ inputs.APPLICATION_NAME }}" DEPLOYMENT_IMAGE="${{ inputs.DEPLOYMENT_IMAGE }}" APPLICATION_PORT="${{ inputs.APPLICATION_PORT }}" NBL_NAME="${{ inputs.NBL_NAME }}" APPLICATION_PATH_HEALTH="${{ inputs.APPLICATION_PATH_HEALTH }}" APPLICATION_ARGS="${{ inputs.APPLICATION_ARGS }}"
     shell: bash
 
   - run: cat ./deployment/application.yaml
