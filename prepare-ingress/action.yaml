@@ -17,12 +17,13 @@ runs:
     with:
       repository: ${{ inputs.REPOSITORY }}
       token: ${{ inputs.CR_PAT }}
-  - run: export API_MAPPING=$(cat ./api-mapping/api.json)
 
   - uses: actions/checkout@v2
     with:
       repository: easytecs/eks-deployment
       token: ${{ inputs.CR_PAT }}
+  - run: ls -la
+    shell: bash
   - run: mkdir -p ./deployment
     shell: bash
   - run: python ./STBuild/convert-ingress.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} APPLICATION_PORT=${{ inputs.APPLICATION_PORT }}
@@ -32,5 +33,5 @@ runs:
 
   - uses: actions/upload-artifact@v3
     with:
-      name: deployment-env
+      name: deployment-ingress
       path: ./deployment
