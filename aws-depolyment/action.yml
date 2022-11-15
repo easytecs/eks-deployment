@@ -9,6 +9,14 @@ inputs:
     required: true
   AWS_SECRET_ACCESS_KEY:
     required: true
+
+  SERVICE_NAMESPACE:
+    required: false
+    default: st-service
+
+  DEPLOYMENT_INGRESS:
+    required: false
+    default: 0
   
 runs:
   using: "composite"
@@ -27,8 +35,15 @@ runs:
         name: deployment-application
         path: ./deployment-application
 
+    - name: Download Deployment Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-ingress
+        path: ./deployment-ingress
+
     - name: Deploy
       uses: safe2008/eks-actions@v0.0.4
+      if: ${{ DEPLOYMENT_INGRESS == 1 }}
       env:
         aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -36,6 +51,8 @@ runs:
         cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
       with:
         args: |
-          kubectl get namespace | grep -q "^st-service " || kubectl create namespace st-service
+          kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
+
           kubectl apply -f ./deployment-env/config-map.yaml
           kubectl apply -f ./deployment-application/application.yaml
+          ${{ DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-intress/intress.yaml

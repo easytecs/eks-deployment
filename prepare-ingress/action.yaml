@@ -34,8 +34,6 @@ runs:
       name: api-mapping
       path: ./api-mapping
 
-  - run: ls -la
-    shell: bash
   - run: mkdir -p ./deployment
     shell: bash
   - run: python ./STBuild/convert-ingress.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} APPLICATION_PORT=${{ inputs.APPLICATION_PORT }}

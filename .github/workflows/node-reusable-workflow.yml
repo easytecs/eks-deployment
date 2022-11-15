@@ -159,6 +159,7 @@ jobs:
           EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          DEPLOYMENT_INGRESS: 1
     needs: [pre-env, pre-application, build-node-image]
 
   after-build:
