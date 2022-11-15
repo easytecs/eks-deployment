@@ -18,7 +18,7 @@ apiMapping = open('./api-mapping/api.json')
 
 paths = ""
 
-for value in json.load(apiMapping)["endpoints"]:
+for value in json.load(apiMapping)["domains"]:
   paths = paths + """
       - path: {2}
         pathType: ImplementationSpecific
