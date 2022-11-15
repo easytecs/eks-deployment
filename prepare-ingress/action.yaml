@@ -5,6 +5,9 @@ inputs:
     required: true
   APPLICATION_PORT:
     required: true
+  SERVICE_NAMESPACE:
+    required: false
+    default: st-service
   CR_PAT:
     required: true
   REPOSITORY:
@@ -36,7 +39,7 @@ runs:
 
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/convert-ingress.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} APPLICATION_PORT=${{ inputs.APPLICATION_PORT }}
+  - run: python ./STBuild/convert-ingress.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} SERVICE_NAMESPACE=${{ inputs.SERVICE_NAMESPACE }} APPLICATION_PORT=${{ inputs.APPLICATION_PORT }}
     shell: bash
   - run: cat ./deployment/ingress.yaml
     shell: bash

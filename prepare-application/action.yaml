@@ -7,6 +7,9 @@ inputs:
     required: true
   APPLICATION_PORT:
     required: true
+  SERVICE_NAMESPACE:
+    required: false
+    default: st-service
   NBL_NAME:
     required: false
   APPLICATION_ARGS:
@@ -22,10 +25,10 @@ runs:
     with:
       repository: easytecs/eks-deployment
       token: ${{ inputs.CR_PAT }}
-      
+
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/create-application-deployment.py ${{ inputs.APPLICATION_NAME }} ${{ inputs.DEPLOYMENT_IMAGE }} ${{ inputs.APPLICATION_PORT }} ${{ inputs.NBL_NAME }}
+  - run: python ./STBuild/create-application-deployment.py APPLICATION_NAME="${{ inputs.APPLICATION_NAME }}" SERVICE_NAMESPACE="${{ inputs.SERVICE_NAMESPACE }}" DEPLOYMENT_IMAGE="${{ inputs.DEPLOYMENT_IMAGE }}" APPLICATION_PORT="${{ inputs.APPLICATION_PORT }}" NBL_NAME="${{ inputs.NBL_NAME }}"
     shell: bash
 
   - run: cat ./deployment/application.yaml

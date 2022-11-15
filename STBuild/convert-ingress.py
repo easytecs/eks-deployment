@@ -40,15 +40,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {0}
-  namespace: st-application
+  namespace: {1}
 spec:
   ingressClassName: kong
   rules:
   - http:
       paths:
-{1}
+{2}
 """.format(
   argsObject["APPLICATION_NAME"],
+  argsObject["SERVICE_NAMESPACE"],
   paths
 )
 

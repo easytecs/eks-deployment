@@ -1,0 +1,69 @@
+name: prepare-env
+
+inputs:
+  CR_PAT:
+    required: true
+  ST_MONGO_USERNAME:
+    required: false
+    default: "1"
+  ST_MONGO_PASSWORD:
+    required: false
+    default: "1"
+  ST_MONGO_HOST:
+    required: false
+    default: "1"
+  ST_MONGO_DB_DATABASE:
+    required: false
+    default: "1"
+  ST_APPLICATION_PORT:
+    required: false
+    default: "1"
+  ST_API_GATEWAY_URL:
+    required: false
+    default: "1"
+  ST_ELASTICSEARCH_NODE:
+    required: false
+    default: "1"
+  ST_ELASTICSEARCH_USER:
+    required: false
+    default: "1"
+  ST_ELASTICSEARCH_PWD:
+    required: false
+    default: "1"
+  ST_HASH_SALT:
+    required: false
+    default: "1"
+  ST_EMAIL_HOST_SMTP:
+    required: false 
+    default: "1"
+  ST_EMAIL_USERNAME:
+    required: false
+    default: "1"
+  ST_EMAIL_PASSWORD:
+    required: false
+    default: "1"
+  ST_ZOOM_HOST:
+    required: false
+    default: "1"
+  ST_CALENDAR_HOST:
+    required: false
+    default: "1"
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
+  - run: mkdir -p ./deployment
+    shell: bash
+  - run: python ./STBuild/convert-env-front.py PUBLIC_URL=${{ inputs.PUBLIC_URL }} REACT_APP_API_URL=${{ inputs.REACT_APP_API_URL }} REACT_APP_ZOOM_URI_LOGIN=${{ inputs.REACT_APP_ZOOM_URI_LOGIN }} REACT_APP_APPLICATION_DNS=${{ inputs.REACT_APP_APPLICATION_DNS }}
+    shell: bash
+  - run: cat ./deployment/.env.production.local
+    shell: bash
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: deployment-env
+      path: ./deployment
