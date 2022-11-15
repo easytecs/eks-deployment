@@ -43,7 +43,7 @@ runs:
 
     - name: Deploy
       uses: safe2008/eks-actions@v0.0.4
-      if: ${{ DEPLOYMENT_INGRESS == 1 }}
+      if: ${{ inputs.DEPLOYMENT_INGRESS == 1 }}
       env:
         aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -55,4 +55,4 @@ runs:
 
           kubectl apply -f ./deployment-env/config-map.yaml
           kubectl apply -f ./deployment-application/application.yaml
-          ${{ DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-intress/intress.yaml
+          ${{ inputs.DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-intress/intress.yaml
