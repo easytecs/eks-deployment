@@ -15,7 +15,7 @@ def formatArgs ():
 argsObject = formatArgs()
 
 args = ""
-if sys.argv[6]:
+if argsObject["APPLICATION_ARGS"] != "":
   args = """
         args: ["{0}"]
   """.format('","'.join(argsObject["APPLICATION_ARGS"].split(",")))
