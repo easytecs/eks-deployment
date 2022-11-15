@@ -21,7 +21,7 @@ paths = ""
 for value in json.load(apiMapping)["endpoints"]:
   paths = paths + """
       - path: {2}
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: {0}
@@ -41,9 +41,8 @@ kind: Ingress
 metadata:
   name: {0}
   namespace: st-application
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: kong
   rules:
   - http:
       paths:
