@@ -47,17 +47,6 @@ jobs:
           
           CR_PAT: ${{ secrets.CR_PAT }}
 
-  pre-ingress:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: easytecs/eks-deployment/prepare-ingress@main
-        with:
-          APPLICATION_NAME: ${{ secrets.APPLICATION_NAME }}
-          SERVICE_NAMESPACE: st-frontend
-          APPLICATION_PORT: ${{ secrets.APPLICATION_PORT }}
-          REPOSITORY: ${{ secrets.REPOSITORY }}
-          CR_PAT: ${{ secrets.CR_PAT }}
-
   pre-application:
     runs-on: ubuntu-latest
     steps:
@@ -92,7 +81,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           DEPLOYMENT_INGRESS: 1
           SERVICE_NAMESPACE: st-application
-    needs: [pre-env, pre-application, pre-ingress, build-node-image]
+    needs: [pre-env, pre-application, build-node-image]
 
   after-build:
     runs-on: ubuntu-latest
