@@ -49,10 +49,10 @@ jobs:
     steps:
       - uses: easytecs/eks-deployment/prepare-env-front@main
         with:
-          PUBLIC_URL: ${{ secrets.MONGO_USERNAME }}
-          REACT_APP_API_URL: ${{ secrets.MONGO_PASSWORD }}
-          REACT_APP_ZOOM_URI_LOGIN: ${{ secrets.MONGO_HOST }}
-          REACT_APP_APPLICATION_DNS: ${{ secrets.MONGO_DB_DATABASE }}
+          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_ZOOM_URI_LOGIN: ${{ secrets.REACT_APP_ZOOM_URI_LOGIN }}
+          REACT_APP_APPLICATION_DNS: ${{ secrets.REACT_APP_APPLICATION_DNS }}
           
           CR_PAT: ${{ secrets.CR_PAT }}
 
