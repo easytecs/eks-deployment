@@ -64,6 +64,7 @@ jobs:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           SERVICE_NAMESPACE: st-frontend
           APPLICATION_PATH_HEALTH: /
+          APPLICATION_INITIAL_DELAY: 60
           DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
           APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
           NBL_NAME: ${{ inputs.NBL_NAME }}
