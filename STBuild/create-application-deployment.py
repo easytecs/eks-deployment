@@ -47,11 +47,12 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: external
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-name: {2}
 spec:
   ports:
-  - port: {1}
-    targetPort: {1}
-    protocol: TCP
+    - port: {1}
+      targetPort: {1}
+      protocol: TCP
   type: LoadBalancer
   selector:
     app: {0}
