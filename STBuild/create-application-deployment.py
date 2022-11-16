@@ -44,12 +44,14 @@ metadata:
   name: {0}
   namespace: {3}
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-name: {2}
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-internal: false
 spec:
   ports:
   - port: {1}
+    targetPort: {1}
     protocol: TCP
   type: LoadBalancer
   selector:
@@ -124,3 +126,4 @@ file_object = open('./deployment/application.yaml', 'a')
 file_object.write(applicationFile)
 
 file_object.close()
+# sg-0a033f247657b1046
