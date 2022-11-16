@@ -3,49 +3,19 @@ name: prepare-env
 inputs:
   CR_PAT:
     required: true
+  PUBLIC_URL:
+    required: false
+    default: "1"
+  REACT_APP_API_URL:
+    required: false
+    default: "1"
+  REACT_APP_ZOOM_URI_LOGIN:
+    required: false
+    default: "1"
+  REACT_APP_APPLICATION_DNS:
+    required: false
+    default: "1"
   ST_MONGO_USERNAME:
-    required: false
-    default: "1"
-  ST_MONGO_PASSWORD:
-    required: false
-    default: "1"
-  ST_MONGO_HOST:
-    required: false
-    default: "1"
-  ST_MONGO_DB_DATABASE:
-    required: false
-    default: "1"
-  ST_APPLICATION_PORT:
-    required: false
-    default: "1"
-  ST_API_GATEWAY_URL:
-    required: false
-    default: "1"
-  ST_ELASTICSEARCH_NODE:
-    required: false
-    default: "1"
-  ST_ELASTICSEARCH_USER:
-    required: false
-    default: "1"
-  ST_ELASTICSEARCH_PWD:
-    required: false
-    default: "1"
-  ST_HASH_SALT:
-    required: false
-    default: "1"
-  ST_EMAIL_HOST_SMTP:
-    required: false 
-    default: "1"
-  ST_EMAIL_USERNAME:
-    required: false
-    default: "1"
-  ST_EMAIL_PASSWORD:
-    required: false
-    default: "1"
-  ST_ZOOM_HOST:
-    required: false
-    default: "1"
-  ST_CALENDAR_HOST:
     required: false
     default: "1"
 
