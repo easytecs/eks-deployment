@@ -86,6 +86,13 @@ spec:
         name: {0}
         ports:
         - containerPort: {2}
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "250Mi"
+          limits:
+            cpu: "250m"
+            memory: "500Mi"
         livenessProbe:
           failureThreshold: 3
           httpGet:
