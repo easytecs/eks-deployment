@@ -10,6 +10,9 @@ inputs:
   AWS_SECRET_ACCESS_KEY:
     required: true
 
+  CR_PAT:
+    required: true
+
   SERVICE_NAMESPACE:
     required: false
     default: st-service
@@ -53,7 +56,8 @@ runs:
         args: |
           ls -la
           kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
-
+          kubectl get secret -n ${{ inputs.SERVICE_NAMESPACE }} | grep -q "^regcred " || kubectl create secret docker-registry regcred --docker-server=ghcr.io --docker-username=${{ github.actor }} --docker-password=${{ inputs.CR_PAT }} -n ${{ inputs.SERVICE_NAMESPACE }}
+          
           kubectl apply -f ./deployment-env/config-map.yaml
           kubectl apply -f ./deployment-application/application.yaml
           ${{ inputs.DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-ingress/ingress.yaml

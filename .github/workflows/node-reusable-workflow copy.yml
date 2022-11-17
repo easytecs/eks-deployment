@@ -164,6 +164,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           DEPLOYMENT_INGRESS: 1
           SERVICE_NAMESPACE: st-application
+          CR_PAT: ${{ secrets.CR_PAT }}
     needs: [pre-env, pre-application, pre-ingress, build-node-image]
 
   after-build:
