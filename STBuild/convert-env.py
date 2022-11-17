@@ -1,4 +1,5 @@
 import sys
+import re 
  
 apcliationNameSplited =  sys.argv[1].split("=")
 serviceNameSplited =  sys.argv[2].split("=")
@@ -23,6 +24,6 @@ for key, value in enumerate(sys.argv):
     keyAndValue = value.split("=")
     if keyAndValue[0].startswith("ST_") and keyAndValue[1] != "":
         print(keyAndValue[1])
-        file_object.write('\n  {0}: "{1}"'.format(keyAndValue[0].removeprefix("ST_"), keyAndValue[1]))
+        file_object.write('\n  {0}: "{1}"'.format(re.sub("^ST_", "", keyAndValue[0]), keyAndValue[1]))
 
 file_object.close()
