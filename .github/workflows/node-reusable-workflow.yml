@@ -118,6 +118,7 @@ jobs:
           ST_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           ST_ZOOM_HOST: ${{ secrets.ZOOM_HOST }}
           ST_CALENDAR_HOST: ${{ secrets.CALENDAR_HOST }}
+          ST_STACKOVERFLOW_TOKEN: ${{ secrets.STACKOVERFLOW_TOKEN }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-ingress:
