@@ -53,6 +53,9 @@ inputs:
   ST_CALENDAR_HOST:
     required: false
     default: "1"
+  ST_STACKOVERFLOW_TOKEN:
+    required: false
+    default: "1"
 
 runs:
   using: "composite"
