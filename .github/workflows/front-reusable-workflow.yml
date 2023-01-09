@@ -53,6 +53,7 @@ jobs:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
           REACT_APP_ZOOM_URI_LOGIN: ${{ secrets.REACT_APP_ZOOM_URI_LOGIN }}
           REACT_APP_APPLICATION_DNS: ${{ secrets.REACT_APP_APPLICATION_DNS }}
+          REACT_APP_CDN_URL: ${{ secrets.REACT_APP_CDN_URL }}
           
           CR_PAT: ${{ secrets.CR_PAT }}
 
