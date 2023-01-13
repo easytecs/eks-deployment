@@ -4,6 +4,8 @@ secretFile = "CI=false"
 file_object = open('./deployment/.env.production.local', 'a')
 file_object.write(secretFile)
 
+print(sys.argv)
+
 for key, value in enumerate(sys.argv):
     if key < 1:
       continue
