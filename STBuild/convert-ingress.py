@@ -42,10 +42,9 @@ metadata:
   name: {0}
   namespace: {1}
   annotations:
-    kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "true"
-    konghq.com/plugins: httpbin-basic-auth, httpbin-key-auth
 spec:
+  ingressClassName: kong
   rules:
   - http:
       paths:
