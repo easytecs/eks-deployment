@@ -18,6 +18,9 @@ inputs:
   REACT_APP_APPLICATION_DNS:
     required: false
     default: "1"
+  REACT_APP_API_TOKEN:
+    required: false
+    default: "1"
   ST_MONGO_USERNAME:
     required: false
     default: "1"
@@ -31,7 +34,7 @@ runs:
       token: ${{ inputs.CR_PAT }}
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/convert-env-front.py PUBLIC_URL=${{ inputs.PUBLIC_URL }} REACT_APP_API_URL=${{ inputs.REACT_APP_API_URL }} REACT_APP_ZOOM_URI_LOGIN=${{ inputs.REACT_APP_ZOOM_URI_LOGIN }} REACT_APP_APPLICATION_DNS=${{ inputs.REACT_APP_APPLICATION_DNS }} REACT_APP_CDN_URL=${{ inputs.REACT_APP_CDN_URL }}
+  - run: python ./STBuild/convert-env-front.py PUBLIC_URL=${{ inputs.PUBLIC_URL }} REACT_APP_API_URL=${{ inputs.REACT_APP_API_URL }} REACT_APP_ZOOM_URI_LOGIN=${{ inputs.REACT_APP_ZOOM_URI_LOGIN }} REACT_APP_APPLICATION_DNS=${{ inputs.REACT_APP_APPLICATION_DNS }} REACT_APP_CDN_URL=${{ inputs.REACT_APP_CDN_URL }} REACT_APP_API_TOKEN={{ inputs.REACT_APP_API_TOKEN }}
     shell: bash
   - run: cat ./deployment/.env.production.local
     shell: bash
