@@ -44,7 +44,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "true"
-    konghq.com/plugins: app-jwt, meututor-platform-acl
+    konghq.com/plugins: httpbin-basic-auth, httpbin-key-auth
 spec:
   rules:
   - http:
