@@ -1,0 +1,42 @@
+name: Custom Kubernets Resource
+
+on:
+  workflow_call:
+    inputs:
+      AWS_REGION:
+        default: "us-east-1" 
+        type: string
+      EKS_CLUSTER_NAME:
+        default: "eks-dev" 
+        type: string
+      SERVICE_NAMESPACE:
+        required: true
+        type: string
+      RESPOSITORY:
+        required: false
+        type: string
+      COMAND_INLINE:
+        required: false
+        type: string
+        
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+jobs:     
+
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/aws-depolyment-custom@main
+        with:
+          AWS_REGION: ${{ inputs.AWS_REGION }}
+          EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SERVICE_NAMESPACE: ${{ inputs.SERVICE_NAMESPACE }}
+          RESPOSITORY: ${{ inputs.RESPOSITORY }}
+          COMAND_INLINE: ${{ inputs.COMAND_INLINE }}
+          CR_PAT: ${{ secrets.CR_PAT }}
