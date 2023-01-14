@@ -42,6 +42,7 @@ metadata:
   name: {0}
   namespace: {1}
   annotations:
+    konghq.com/plugins: app-jwt-2
     konghq.com/strip-path: "true"
 spec:
   ingressClassName: kong

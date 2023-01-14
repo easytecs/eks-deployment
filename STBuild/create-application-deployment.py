@@ -44,7 +44,6 @@ metadata:
   name: {0}
   namespace: {3}
   annotations:
-    konghq.com/plugins=app-jwt
     service.beta.kubernetes.io/aws-load-balancer-type: nlb
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
