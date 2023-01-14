@@ -31,12 +31,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Clone Project
-      uses: actions/checkout@v2
-      with:
-        repository:  ${{ inputs.RESPOSITORY }}
-        token: ${{ inputs.CR_PAT }}
-        
+            
     - name: Configure AWS credentials and EKS
       uses: safe2008/eks-actions@v0.0.4
       env:
@@ -57,5 +52,3 @@ runs:
           helm repo add ${{ inputs.SERVICE_HELM_REPO }}
           helm repo update
           helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
-          
-          for f in ./custom_file/*.yaml; do kubectl apply -f $f; done

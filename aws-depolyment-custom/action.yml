@@ -1,0 +1,42 @@
+name: aws-depolyment
+
+inputs:
+  AWS_REGION:
+    required: true
+  EKS_CLUSTER_NAME:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+  SERVICE_NAMESPACE:
+    required: true
+  RESPOSITORY:
+    required: true
+  COMAND_INLINE:
+    required: false
+    type: string
+  CR_PAT:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Clone Project
+      uses: actions/checkout@v2
+      with:
+        repository:  ${{ inputs.RESPOSITORY }}
+        token: ${{ inputs.CR_PAT }}
+        
+    - name: Configure AWS credentials and EKS
+      uses: safe2008/eks-actions@v0.0.4
+      env:
+        aws_access_key_id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ inputs.AWS_REGION }}
+        cluster_name: ${{ inputs.EKS_CLUSTER_NAME }}
+      with:
+        args: |
+          for f in ./custom_file/*.yaml; do kubectl apply -f $f; done
+
+          ${{ inputs.COMAND_INLINE }} && ${{ inputs.COMAND_INLINE }}
