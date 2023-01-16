@@ -117,8 +117,10 @@ jobs:
           ST_EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
           ST_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           ST_ZOOM_HOST: ${{ secrets.ZOOM_HOST }}
-          ST_CALENDAR_HOST: ${{ secrets.CALENDAR_HOST }}
-          ST_STACKOVERFLOW_TOKEN: ${{ secrets.STACKOVERFLOW_TOKEN }}
+          ST_API_URL_QUEUE_EMAIL: ${{ secrets.API_URL_QUEUE_EMAIL }}
+          ST_API_URL_SEARCH: ${{ secrets.API_URL_SEARCH }}
+          ST_API_URL_CALENDAR: ${{ secrets.API_URL_CALENDAR }}
+          ST_API_URL_CUSTOMER: ${{ secrets.API_URL_CUSTOMER }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-ingress:
