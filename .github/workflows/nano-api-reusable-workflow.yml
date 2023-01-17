@@ -121,6 +121,11 @@ jobs:
           ST_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           ST_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           ST_AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+          ST_API_URL_QUEUE_EMAIL: ${{ secrets.API_URL_QUEUE_EMAIL }}
+          ST_API_URL_SEARCH: ${{ secrets.API_URL_SEARCH }}
+          ST_API_URL_CALENDAR: ${{ secrets.API_URL_CALENDAR }}
+          ST_API_URL_CUSTOMER: ${{ secrets.API_URL_CUSTOMER }}
+          ST_API_URL_QUEUE_MEET: ${{ secrets.API_URL_QUEUE_MEET }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-ingress:
