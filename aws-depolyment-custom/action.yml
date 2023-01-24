@@ -38,5 +38,3 @@ runs:
       with:
         args: |
           for f in ./custom_file/*.yaml; do kubectl apply -f $f; done
-
-          ${{ inputs.COMAND_INLINE }} && ${{ inputs.COMAND_INLINE }}
