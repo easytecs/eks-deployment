@@ -26,7 +26,6 @@ spec:
   ports:
   - port: {1}
     protocol: TCP
-  type: LoadBalancer
   selector:
     app: {0}
 """.format(
