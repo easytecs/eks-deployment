@@ -7,7 +7,7 @@ on:
         default: "us-east-1" 
         type: string
       EKS_CLUSTER_NAME:
-        default: "eks-dev" 
+        default: "eks-platform" 
         type: string
 
       APPLICATION_NAME:
