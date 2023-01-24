@@ -17,13 +17,13 @@ on:
         type: string
       
       NBL_NAME: 
-        default: "nbl-dev" 
+        default: "nbl-platform" 
         type: string
       AWS_REGION:
         default: "us-east-1" 
         type: string
       EKS_CLUSTER_NAME:
-        default: "eks-dev" 
+        default: "eks-platform" 
         type: string
 
     secrets:
