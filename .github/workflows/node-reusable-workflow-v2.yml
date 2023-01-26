@@ -45,7 +45,7 @@ jobs:
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           SERVICE_NAMESPACE: st-application
-          ENV_JSON: ${{ secrets[inputs.NAME_ENV_JSON] }}
+          ENV_JSON: ${{ secrets[format('{0}', inputs.NAME_ENV_JSON)] }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-ingress:
