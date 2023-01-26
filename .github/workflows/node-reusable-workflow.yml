@@ -103,7 +103,7 @@ jobs:
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           SERVICE_NAMESPACE: st-application
-          ST_MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          ST_MONGO_USERNAME: ${{ secrets['MONGO_USERNAME'] }}
           ST_MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           ST_MONGO_HOST: ${{ secrets.MONGO_HOST }}
           ST_MONGO_DB_DATABASE: ${{ secrets.MONGO_DB_DATABASE }}
