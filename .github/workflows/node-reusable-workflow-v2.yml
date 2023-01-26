@@ -1,0 +1,106 @@
+name: Run NodeJs Deploy
+
+on:
+  workflow_call:
+    inputs:
+      APPLICATION_NAME:
+        required: true
+        type: string
+      DEPLOYMENT_IMAGE:
+        required: true
+        type: string
+      APPLICATION_PORT: 
+        required: true
+        type: string
+      REPOSITORY:
+        required: true
+        type: string
+      ENV_JSON:
+        required: true
+        type: string
+      
+      NBL_NAME: 
+        default: "nbl-platform" 
+        type: string
+      AWS_REGION:
+        default: "us-east-1" 
+        type: string
+      EKS_CLUSTER_NAME:
+        default: "eks-platform" 
+        type: string
+
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      CR_PAT:
+        required: true
+
+jobs:     
+  pre-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-env-v2@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          SERVICE_NAMESPACE: st-application
+          ENV_JSON: ${{ inputs.ENV_JSON }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+  pre-ingress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-ingress@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          SERVICE_NAMESPACE: st-application
+          APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+  pre-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-application@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          SERVICE_NAMESPACE: st-application
+          DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
+          APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
+          NBL_NAME: ${{ inputs.NBL_NAME }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+  build-node-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/build-node-image@main
+        with:
+          ACTOR: ${{ github.actor }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+          IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/aws-depolyment@main
+        with:
+          AWS_REGION: ${{ inputs.AWS_REGION }}
+          EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          DEPLOYMENT_INGRESS: 1
+          SERVICE_NAMESPACE: st-application
+          CR_PAT: ${{ secrets.CR_PAT }}
+    needs: [pre-env, pre-application, pre-ingress, build-node-image]
+
+  after-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/after-build@main
+        with:
+          REPOSITORY: ${{ inputs.APPLICATION_NAME }}
+          IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+    needs: [pre-env, pre-application, pre-ingress]

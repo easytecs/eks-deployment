@@ -1,0 +1,33 @@
+name: prepare-env
+
+inputs:
+  APPLICATION_NAME:
+    required: true
+  SERVICE_NAMESPACE:
+    required: false
+    default: st-service
+  CR_PAT:
+    required: true
+  ENV_JSON:
+    required: true
+    default: "1"
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
+  - run: cat ${{ inputs.ENV_JSON }} >> env.json
+  - run: mkdir -p ./deployment
+    shell: bash
+  - run: python ./STBuild/convert-env-v2.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} SERVICE_NAMESPACE=${{ inputs.SERVICE_NAMESPACE }} ENV_JSON='${{ inputs.ENV_JSON }}'
+    shell: bash
+  - run: cat ./deployment/config-map.yaml
+    shell: bash
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: deployment-env
+      path: ./deployment
