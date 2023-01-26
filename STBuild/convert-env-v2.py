@@ -19,6 +19,7 @@ file_object = open('./deployment/config-map.yaml', 'a')
 file_object.write(secretFile)
 
 envJson = sys.argv[3].split("=")
+print(envJson)
 env = json.loads(envJson[1])
 
 for key, val in env.items():
