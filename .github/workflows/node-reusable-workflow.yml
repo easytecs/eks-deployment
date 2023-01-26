@@ -123,6 +123,7 @@ jobs:
           ST_API_URL_CUSTOMER: ${{ secrets.API_URL_CUSTOMER }}
           ST_API_URL_QUEUE_MEET: ${{ secrets.API_URL_QUEUE_MEET }}
           CR_PAT: ${{ secrets.CR_PAT }}
+          ST_TEST: ${{ secrets.TEST }}
 
   pre-ingress:
     runs-on: ubuntu-latest
