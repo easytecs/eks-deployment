@@ -16,7 +16,7 @@ runs:
       token: ${{ inputs.CR_PAT }}
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/convert-env-front.py ENV_JSON='${{ inputs.ENV_JSON }}'
+  - run: python ./STBuild/convert-env-front-v2.py ENV_JSON='${{ inputs.ENV_JSON }}'
     shell: bash
   - run: cat ./deployment/.env.production.local
     shell: bash
