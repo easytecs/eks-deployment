@@ -15,7 +15,7 @@ on:
       REPOSITORY:
         required: true
         type: string
-      ENV_JSON:
+      NAME_ENV_JSON:
         required: true
         type: string
       
@@ -45,7 +45,7 @@ jobs:
         with:
           APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
           SERVICE_NAMESPACE: st-application
-          ENV_JSON: ${{ inputs.ENV_JSON }}
+          ENV_JSON: ${{ secrets[${{ inputs.NAME_ENV_JSON }}] }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-ingress:
