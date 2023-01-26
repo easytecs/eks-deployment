@@ -1,0 +1,94 @@
+name: Run Service Using Helm
+
+on:
+  workflow_call:
+    inputs:
+      AWS_REGION:
+        default: "us-east-1" 
+        type: string
+      EKS_CLUSTER_NAME:
+        default: "eks-platform" 
+        type: string
+
+      APPLICATION_NAME:
+        required: true
+        type: string
+      DEPLOYMENT_IMAGE:
+        required: true
+        type: string
+      APPLICATION_PORT: 
+        required: true
+        type: string
+
+      NAME_ENV_JSON:
+        required: true
+        type: string
+     
+      REPOSITORY:
+        required: true
+        type: string
+      
+      APPLICATION_ARGS:
+        required: false
+        type: string
+        default: ""
+      APPLICATION_PATH_HEALTH:
+        required: false
+        type: string
+        default: "/heath"
+
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      CR_PAT:
+        required: true
+      
+jobs:     
+  pre-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-env-v2@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          ENV_JSON: ${{ secrets[format('{0}', inputs.NAME_ENV_JSON)] }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+  pre-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/prepare-service@main
+        with:
+          APPLICATION_NAME: ${{ inputs.APPLICATION_NAME }}
+          APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
+          DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+          APPLICATION_ARGS: ${{ inputs.APPLICATION_ARGS }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+          APPLICATION_PATH_HEALTH: ${{ inputs.APPLICATION_PATH_HEALTH }}
+          
+
+  build-node-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/build-service-image@main
+        with:
+          ACTOR: ${{ github.actor }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+          IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
+          REPOSITORY: ${{ inputs.REPOSITORY }}
+
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/aws-depolyment@main
+        with:
+          AWS_REGION: ${{ inputs.AWS_REGION }}
+          EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CR_PAT: ${{ secrets.CR_PAT }}
+    needs: [pre-env, pre-application, build-node-image]
+
+          

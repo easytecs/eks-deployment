@@ -1,0 +1,27 @@
+name: prepare-env
+
+inputs:
+  CR_PAT:
+    required: true
+  ENV_JSON:
+    required: true
+    default: "1"
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      repository: easytecs/eks-deployment
+      token: ${{ inputs.CR_PAT }}
+  - run: mkdir -p ./deployment
+    shell: bash
+  - run: python ./STBuild/convert-env-front.py ENV_JSON='${{ inputs.ENV_JSON }}'
+    shell: bash
+  - run: cat ./deployment/.env.production.local
+    shell: bash
+
+  - uses: actions/upload-artifact@v3
+    with:
+      name: deployment-env-front
+      path: ./deployment
