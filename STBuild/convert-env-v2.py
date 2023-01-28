@@ -23,6 +23,6 @@ print(envJson)
 env = json.loads(envJson[1])
 
 for key, val in env.items():
-  file_object.write('\n  {0}: "{1}"'.format(key, val))
+  file_object.write('\n  {0}: "{1}"'.format(key, val.replace("EQ_CHARACTER", "=")))
 
 file_object.close()
