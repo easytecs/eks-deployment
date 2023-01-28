@@ -21,7 +21,7 @@ runs:
       token: ${{ inputs.CR_PAT }}
   - run: mkdir -p ./deployment
     shell: bash
-  - run: python ./STBuild/convert-env-v2.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} SERVICE_NAMESPACE=${{ inputs.SERVICE_NAMESPACE }} ENV_JSON='${{ inputs.ENV_JSON }}'
+  - run: python ./STBuild/convert-env-v2.py APPLICATION_NAME=${{ inputs.APPLICATION_NAME }} SERVICE_NAMESPACE=${{ inputs.SERVICE_NAMESPACE }} ENV_JSON="${{ inputs.ENV_JSON }}"
     shell: bash
   - run: cat ./deployment/config-map.yaml
     shell: bash
