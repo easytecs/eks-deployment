@@ -9,6 +9,10 @@ on:
       EKS_CLUSTER_NAME:
         default: "eks-platform" 
         type: string
+      
+      CI_CD_ENV:
+        default: "no-set"
+        type: string
 
       APPLICATION_NAME:
         required: true
@@ -65,6 +69,7 @@ jobs:
           DEPLOYMENT_IMAGE: ${{ inputs.DEPLOYMENT_IMAGE }}
           REPOSITORY: ${{ inputs.REPOSITORY }}
           APPLICATION_ARGS: ${{ inputs.APPLICATION_ARGS }}
+          CI_CD_ENV: ${{ inputs.CI_CD_ENV }}
           CR_PAT: ${{ secrets.CR_PAT }}
           APPLICATION_PATH_HEALTH: ${{ inputs.APPLICATION_PATH_HEALTH }}
           
@@ -76,6 +81,7 @@ jobs:
         with:
           ACTOR: ${{ github.actor }}
           CR_PAT: ${{ secrets.CR_PAT }}
+          CI_CD_ENV: ${{ inputs.CI_CD_ENV }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
           REPOSITORY: ${{ inputs.REPOSITORY }}
 
