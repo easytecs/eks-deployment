@@ -9,6 +9,8 @@ inputs:
     required: true
   RESPOSITORY:
     required: true
+  CI_CD_ENV:
+    required: false
 
 runs:
   using: "composite"
@@ -17,7 +19,7 @@ runs:
     with:
       repository: ${{ inputs.RESPOSITORY }}
       token: ${{ inputs.CR_PAT }}
-  - run: docker build . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
+  - run: docker build --build-arg CI_CD_ENV=$CI_CD_ENV . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
     shell: bash
   
   - uses: docker/login-action@v2
