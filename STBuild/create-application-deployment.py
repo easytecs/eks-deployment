@@ -21,7 +21,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {0}
-  namespace: st-application
+  namespace: {2}
 spec:
   ports:
   - port: {1}
@@ -30,7 +30,8 @@ spec:
     app: {0}
 """.format(
   argsObject['APPLICATION_NAME'],
-  argsObject['APPLICATION_PORT']  
+  argsObject['APPLICATION_PORT'],
+  argsObject['SERVICE_NAMESPACE']
 )
 
 # Service using nbl
