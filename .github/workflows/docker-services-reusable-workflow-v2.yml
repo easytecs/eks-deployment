@@ -27,6 +27,10 @@ on:
       NAME_ENV_JSON:
         required: true
         type: string
+        
+      IS_CREDENTIALS:
+        default: "true" 
+        type: string
      
       REPOSITORY:
         required: true
