@@ -28,7 +28,10 @@ on:
       EKS_CLUSTER_NAME:
         default: "eks-platform" 
         type: string
-
+      IS_CREDENTIALS:
+        default: "true" 
+        type: string
+        
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -57,6 +60,7 @@ jobs:
           SERVICE_NAMESPACE: st-application
           APPLICATION_PORT: ${{ inputs.APPLICATION_PORT }}
           REPOSITORY: ${{ inputs.REPOSITORY }}
+          IS_CREDENTIALS: ${{ inputs.IS_CREDENTIALS }}
           CR_PAT: ${{ secrets.CR_PAT }}
 
   pre-application:
