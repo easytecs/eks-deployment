@@ -33,16 +33,21 @@ for value in json.load(apiMapping)["domains"]:
     value
   )
 
-print(paths)
+ingressCrendentials = """
+  annotations:
+    konghq.com/plugins: app-jwt-2
+"""
 
+if "IS_CREDENTIALS" in argsObject and argsObject["IS_CREDENTIALS"] == "false":
+  ingressCrendentials = ""
+  
 ingressFile = """
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {0}
   namespace: {1}
-  annotations:
-    konghq.com/plugins: app-jwt-2
+{3}
 spec:
   ingressClassName: kong
   rules:
@@ -52,7 +57,8 @@ spec:
 """.format(
   argsObject["APPLICATION_NAME"],
   argsObject["SERVICE_NAMESPACE"],
-  paths
+  paths,
+  ingressCrendentials
 )
 
 file_object = open('./deployment/ingress.yaml', 'a')
