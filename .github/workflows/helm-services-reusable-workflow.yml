@@ -37,6 +37,8 @@ on:
         required: true
       DO_API_PRIVATE_KEY:
         required: true
+      DIGITALOCEAN_ACCESS_TOKEN:
+        required: true
 
 jobs:     
 
@@ -58,5 +60,6 @@ jobs:
           RESPOSITORY: ${{ inputs.RESPOSITORY }}
           CR_PAT: ${{ secrets.CR_PAT }}
           DO_API_PRIVATE_KEY: ${{ secrets.DO_API_PRIVATE_KEY }}
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
           

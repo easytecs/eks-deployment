@@ -11,6 +11,8 @@ inputs:
     required: true
   DO_API_PRIVATE_KEY:
     required: true
+  DIGITALOCEAN_ACCESS_TOKEN:
+    required: true
   SERVICE_RELEASE_NAME:
     required: true
   SERVICE_NAMESPACE:
@@ -37,13 +39,16 @@ runs:
     - name: Configure AWS credentials and EKS
       uses: digitalocean/action-doctl@v2
       with:
-        token: ${{ inputs.DO_API_PRIVATE_KEY }}
+        token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Deployment in kubernets
       shell: bash
       run: |
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
+
+          doctl kubernetes cluster kubeconfig save ${{ inputs.DO_API_PRIVATE_KEY }}
+
       
           doctl kubernetes get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || doctl kubernetes create namespace ${{ inputs.SERVICE_NAMESPACE }}
           
