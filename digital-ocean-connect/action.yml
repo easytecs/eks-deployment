@@ -44,11 +44,11 @@ runs:
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
-
-          kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
+      
+          doctl kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || doctl kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
           
           ${{ inputs.SERVICE_HELM_CRD }} && kubectl create -f ${{ inputs.SERVICE_HELM_CRD }} || echo "NO CREATE SERVICE_HELM_CRD" 
 
-          helm repo add ${{ inputs.SERVICE_HELM_REPO }}
-          helm repo update
-          helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
+          doctl helm repo add ${{ inputs.SERVICE_HELM_REPO }}
+          doctl helm repo update
+          doctl helm upgrade -i  ${{ inputs.SERVICE_HEML_NAME }} ${{ inputs.SERVICE_RELEASE_NAME }}  --namespace=${{ inputs.SERVICE_NAMESPACE }} ${{ inputs.SERVICE_HEML_VALUES }}
