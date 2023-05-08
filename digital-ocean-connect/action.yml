@@ -37,7 +37,7 @@ runs:
     - name: Configure AWS credentials and EKS
       uses: digitalocean/action-doctl@v2
       with:
-        token: ${{ secrets.DO_API_PRIVATE_KEY }}
+        token: ${{ inputs.DO_API_PRIVATE_KEY }}
     - name: Deployment in kubernets
       run: |
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
