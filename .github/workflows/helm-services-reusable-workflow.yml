@@ -41,7 +41,7 @@ jobs:
   aws-depolyment:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/aws-connect@main
+      - uses: easytecs/eks-deployment/digital-ocean-connect@main
         with:
           AWS_REGION: ${{ inputs.AWS_REGION }}
           EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
