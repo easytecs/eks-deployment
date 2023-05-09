@@ -1,0 +1,66 @@
+name: aws-depolyment
+
+inputs:
+  AWS_REGION:
+    required: true
+  EKS_CLUSTER_NAME:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+  DO_API_PRIVATE_KEY:
+    required: true
+  DIGITALOCEAN_ACCESS_TOKEN:
+    required: true
+
+  CR_PAT:
+    required: true
+
+  SERVICE_NAMESPACE:
+    required: false
+    default: st-service
+
+  DEPLOYMENT_INGRESS:
+    required: false
+    default: 0
+  
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Download ConfigMap Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-env
+        path: ./deployment-env
+
+    - name: Download Deployment Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-application
+        path: ./deployment-application
+
+    - name: Download Deployment Artifact
+      uses: actions/download-artifact@v3
+      if: ${{ inputs.DEPLOYMENT_INGRESS == 1 }}
+      with:
+        name: deployment-ingress
+        path: ./deployment-ingress
+
+    - name: Deploy
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Deployment in kubernets
+      shell: bash
+      run: |
+          doctl kubernetes cluster kubeconfig save ${{ inputs.DO_API_PRIVATE_KEY }}
+
+          kubectl get namespace | grep -q "^${{ inputs.SERVICE_NAMESPACE }} " || kubectl create namespace ${{ inputs.SERVICE_NAMESPACE }}
+          kubectl get secret -n ${{ inputs.SERVICE_NAMESPACE }} | grep -q "^regcred " || kubectl create secret docker-registry regcred --docker-server=ghcr.io --docker-username=${{ github.actor }} --docker-password=${{ inputs.CR_PAT }} -n ${{ inputs.SERVICE_NAMESPACE }}
+          
+          kubectl apply -f ./deployment-env/config-map.yaml
+          kubectl apply -f ./deployment-application/application.yaml
+          ${{ inputs.DEPLOYMENT_INGRESS == 0 }} && echo "NO INGRESS" || kubectl apply -f ./deployment-ingress/ingress.yaml
