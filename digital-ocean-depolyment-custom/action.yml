@@ -1,0 +1,44 @@
+name: aws-depolyment
+
+inputs:
+  AWS_REGION:
+    required: true
+  EKS_CLUSTER_NAME:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+  DO_API_PRIVATE_KEY:
+    required: true
+  DIGITALOCEAN_ACCESS_TOKEN:
+    required: true
+  SERVICE_NAMESPACE:
+    required: true
+  RESPOSITORY:
+    required: true
+  COMAND_INLINE:
+    required: false
+    type: string
+  CR_PAT:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Clone Project
+      uses: actions/checkout@v2
+      with:
+        repository:  ${{ inputs.RESPOSITORY }}
+        token: ${{ inputs.CR_PAT }}
+        
+    - name: Configure AWS credentials and EKS
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Deployment in kubernets
+      shell: bash
+      run: |
+        doctl kubernetes cluster kubeconfig save ${{ inputs.DO_API_PRIVATE_KEY }}
+
+        for f in ./custom_file/*.yaml; do kubectl apply -f $f; done
