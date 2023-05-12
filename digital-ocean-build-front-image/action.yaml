@@ -49,8 +49,8 @@ runs:
       run: |
         doctl registry login
 
-        docker build . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
-        docker push ${{ inputs.IMAGE_TAG }}
+        docker build . --file Dockerfile --tag registry.digitalocean.com/myregistry/myapp:latest
+        docker push registry.digitalocean.com/myregistry/myapp:latest
 
 outputs:
   image-tag:
