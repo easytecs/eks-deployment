@@ -37,6 +37,8 @@ on:
         required: true
       DIGITALOCEAN_ACCESS_TOKEN:
         required: true
+      DO_API_PRIVATE_KEY:
+        required: true
       CR_PAT:
         required: true
 
@@ -77,14 +79,28 @@ jobs:
   build-node-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: easytecs/eks-deployment/digital-ocean-build-front-image@main
+      - uses: easytecs/eks-deployment/build-front-image@main
         with:
           ACTOR: ${{ github.actor }}
           CR_PAT: ${{ secrets.CR_PAT }}
           IMAGE_TAG: ${{ inputs.DEPLOYMENT_IMAGE }}
           REPOSITORY: ${{ inputs.REPOSITORY }}
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     needs: [pre-env, pre-front-env]
+  
+  aws-depolyment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: easytecs/eks-deployment/digital-ocean-depolyment@main
+        with:
+          AWS_REGION: ${{ inputs.AWS_REGION }}
+          EKS_CLUSTER_NAME: ${{ inputs.EKS_CLUSTER_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SERVICE_NAMESPACE: st-frontend
+          CR_PAT: ${{ secrets.CR_PAT }}
+          DO_API_PRIVATE_KEY: ${{ secrets.DO_API_PRIVATE_KEY }}
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    needs: [pre-env, pre-front-env, pre-application, build-node-image]
 
   after-build:
     runs-on: ubuntu-latest
