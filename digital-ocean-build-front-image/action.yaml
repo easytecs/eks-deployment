@@ -49,12 +49,12 @@ runs:
   - name: Build Image
     shell: bash
     run: |
-      docker build -t meu-tutor-front .
+      docker build -t app-registry/meu-tutor-front .
 
   - name: Tag Image
     shell: bash
     run: |
-      docker tag meu-tutor-front registry.digitalocean.com/app-registry/meu-tutor-front
+      docker tag app-registry/meu-tutor-front registry.digitalocean.com/app-registry/meu-tutor-front
 
   - name: Push Image
     shell: bash
