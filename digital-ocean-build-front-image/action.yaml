@@ -1,0 +1,58 @@
+name: Node.js CI
+
+inputs:
+  ACTOR:
+    required: true
+  CR_PAT:
+    required: true
+  IMAGE_TAG:
+    required: true
+  REPOSITORY:
+    required: true
+  DIGITALOCEAN_ACCESS_TOKEN:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Build Aplication
+    uses: actions/checkout@v2
+    with:
+      repository:  ${{ inputs.REPOSITORY }}
+      token: ${{ inputs.CR_PAT }}
+    
+  - name: Download Deployment Artifact
+    uses: actions/download-artifact@v3
+    with:
+      name: deployment-env-front
+      path: ./deployment-env-front
+    
+  - uses: actions/setup-node@v3
+    with:
+      node-version: 16.x
+      cache: 'npm'
+  - run: rm -rf .env.production.local
+    shell: bash
+  - run: npm i --force
+    shell: bash
+  - run: mv ./deployment-env-front/.env.production.local ./.env.production.local
+    shell: bash
+  - run: npm run build --if-present
+    shell: bash
+
+  - name: Login to GitHub Container Registry
+    uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Deployment in kubernets
+      shell: bash
+      run: |
+        doctl registry login
+
+        docker build . --file Dockerfile --tag ${{ inputs.IMAGE_TAG }}
+        docker push ${{ inputs.IMAGE_TAG }}
+
+outputs:
+  image-tag:
+    description: "Image Tag"
+    value: ${{ inputs.IMAGE_TAG }}
