@@ -42,8 +42,8 @@ runs:
 
   - name: Login to GitHub Container Registry
     uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
+    with:
+      token: ${{ inputs.DIGITALOCEAN_ACCESS_TOKEN }}
   - name: Deployment in kubernets
     shell: bash
     run: |
