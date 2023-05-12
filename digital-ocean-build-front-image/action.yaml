@@ -49,8 +49,9 @@ runs:
   - name: Deployment in kubernets
     shell: bash
     run: |
-      docker build . --file Dockerfile --tag registry.digitalocean.com/app-registry/meu-tutor-front:latest
-      docker push registry.digitalocean.com/app-registry/meu-tutor-front:latest
+      docker build -t meu-tutor-front .
+      docker tag meu-tutor-front registry.digitalocean.com/app-registry/meu-tutor-front
+      docker push registry.digitalocean.com/app-registry/meu-tutor-front
 
 outputs:
   image-tag:
